@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "node-telegram-bot-api": "^0.30.0",
-    "roll": "^1.2.0"
+    "roll": "^1.2.0",
+    "rpg-dice-roller": "^3.0.1"
   },
   "engines": {
     "node": "10.13.0"
