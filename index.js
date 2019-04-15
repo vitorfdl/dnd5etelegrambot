@@ -27,16 +27,16 @@ bot.onText(/^(\/r)\b/i, (msg, match) => {
   }
   
   if (text[opt ? 3 : 2]) {
-    extra = `<b>${text.slice(opt ? 3 : 2).join(' ')}</b>`;
+    extra = ` <b>(${text.slice(opt ? 3 : 2).join(' ')})</b>`;
   }
   const res = roller.roll(text[1]);
   const dice = `${res.notation}`;
-  const quote = `<a href="tg://user?id=${msg.from.id}">${msg.from.first_name}</a>`;
+  const quote = `<a href="tg://user?id=${msg.from.id}">${msg.from.first_name}</a>${extra}`;
 
   bot.deleteMessage(msg.chat.id, msg.message_id).catch(() => null);
   bot.sendMessage(
     msg.chat.id, 
-    `${quote}\n${extra || 'Resultado'}: ${dice} (<code>${res.rolls.join(', ')}</code>)\nTotal: <code>${res.total}</code>${opt}`, 
+    `${quote}\nResultado: ${dice} (<code>${res.rolls.join(', ')}</code>)\nTotal: <code>${res.total}</code>${opt}`, 
     {parse_mode: 'HTML', disable_notification: true}
   );
 });
