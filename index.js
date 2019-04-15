@@ -5,6 +5,9 @@ const bot = new TelegramBot( '825396657:AAHoVYR2h2bFxMX8Ei61gO2jm0_LKCWl_GY', { 
 const Roll = require('rpg-dice-roller');
 const roller = new Roll.DiceRoller();
 
+const initiative = require('./services/initative/index');
+
+
 bot.onText(/^(\/r)\b/i, (msg, match) => {
   const text = msg.text.split(' ');
   // if (!roll.validate(text[1])) {
@@ -47,6 +50,9 @@ bot.onText(/^(\/rrr)\b/i, (msg, match) => {
   //   return bot.sendMessage(msg.chat.id, 'Essa não é uma formula válida para rolagem de dados. Tente: /rrr NdVezes Dado CD', );
   // }
   const n = Number(text[1]);
+  if (!n || !text[2]) { 
+    return bot.sendMessage(msg.chat.id, 'Parametro inválido, use: /rrr <n> <dado> <cd>');
+  }
 
   const final = [];
   text[3] = Number(text[3]);
@@ -67,6 +73,29 @@ bot.onText(/^(\/rrr)\b/i, (msg, match) => {
   bot.sendMessage(
     msg.chat.id, 
     `${quote} Rolando ${n} interações para CD ${text[3]}:\n${dice_rolls}\n${success} Sucessos.`, 
+    {parse_mode: 'HTML', disable_notification: true}
+  );
+});
+
+
+bot.onText(/^(\/init)\b/i, (msg, match) => {
+  initiative(bot, msg);
+});
+
+bot.onText(/^(\/ajuda)\b/i, (msg, match) => {
+  const text = [
+    '[Comando] - [Descrição]', 
+    '/r 1d20 [Desc] - Realiza rolagem de dados com descrição. ',
+    '/r 1d20 adv [Desc] - Realiza rolagem de dados com vantagem e descrição. ',
+    '/r 1d20 dis [Desc] - Realiza rolagem de dados com desvantagem e descrição. ',
+    '/r 1d20 dis [Desc] - Realiza rolagem de dados com desvantagem e descrição. ',
+    '/rrr 5 1d20 10 - Realiza multiplas rolagens N para DADO contra CD para sucesso. ',
+    '/init ajuda - Instruções sobre comandos de iniciativa. ',
+  ].join('\n');
+  
+  bot.sendMessage(
+    msg.chat.id, 
+    text, 
     {parse_mode: 'HTML', disable_notification: true}
   );
 });

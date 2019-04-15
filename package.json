@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "mkdirp": "^0.5.1",
     "node-telegram-bot-api": "^0.30.0",
     "roll": "^1.2.0",
     "rpg-dice-roller": "^3.0.1"
