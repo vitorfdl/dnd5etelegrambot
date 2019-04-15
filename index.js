@@ -1,6 +1,5 @@
 process.env.NTBA_FIX_319 = 1;
 const TelegramBot = require(`node-telegram-bot-api`);
-const laconaDnD = require(`lacona-dnd`);
 const bot = new TelegramBot( '825396657:AAHoVYR2h2bFxMX8Ei61gO2jm0_LKCWl_GY', { polling: true } );
 
 const Roll = require('roll');
