@@ -1,18 +1,19 @@
 const initLoader = require('./lib/index');
 
 module.exports = async (bot, msg, text) => {
-  if (!text[2]) return bot.sendMessage(msg.chat.id, `Parametro invalido, use: /init novo <sessão>`);
+  const [,,sessao, new_sessao] = text;
+  if (!sessao) return bot.sendMessage(msg.chat.id, `Parametro invalido, use: /init novo <sessão>`);
 
 
-  const my_list = await initLoader.load('test', text[2]);
-  if (!my_list) return bot.sendMessage(msg.chat.id, `Sessão de Iniciativa ${text[2]} não encontrado.`);
+  const my_list = await initLoader.load('test', sessao);
+  if (!my_list) return bot.sendMessage(msg.chat.id, `Sessão de Iniciativa ${sessao} não encontrado.`);
 
-  const exists = await initLoader.load('test', text[3]);
+  const exists = await initLoader.load('test', new_sessao);
   if (!exists) {
-    await initLoader.newDoc('test', text[3]);
+    await initLoader.newDoc('test', new_sessao);
   }
 
-  initLoader.save('test', text[3], my_list);
+  initLoader.save('test', new_sessao, my_list);
   
-  bot.sendMessage(msg.chat.id, `Sessão ${text[2]} copiada para ${text[3]}`);
+  bot.sendMessage(msg.chat.id, `Sessão ${sessao} copiada para ${new_sessao}`);
 }

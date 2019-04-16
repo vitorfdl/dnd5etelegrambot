@@ -11,26 +11,26 @@ module.exports = async (bot, msg, text) => {
     no_hp = true;
   }
 
-  if (!text[2]) return bot.sendMessage(msg.chat.id, `Erro de sintaxe. Use: /init add <sessão> <nome> <mod> <hp> <CA> <DuplicarN>`);
-  else if (!text[3]) return bot.sendMessage(msg.chat.id, `Erro de sintaxe. Use: /init add <sessão> <nome> <mod> <hp> <CA> <DuplicarN>`);
-  else if (!text[4] || isNaN(Number(text[4]))) return bot.sendMessage(msg.chat.id, `O Mod: ${text[4]} não é um número.`);
+  const [,, sessao, creature, mod, hp, ca, duplicate] = text;
+  if (!sessao) return bot.sendMessage(msg.chat.id, 'Erro de sintaxe. Use: /init add <sessão> <nome> <mod> <hp> <CA> <DuplicarN>');
+  else if (!creature) return bot.sendMessage(msg.chat.id, 'Erro de sintaxe. Use: /init add <sessão> <nome> <mod> <hp> <CA> <DuplicarN>');
+  else if (!mod || isNaN(Number(mod))) return bot.sendMessage(msg.chat.id, `O Mod: ${mod} não é um número.`);
 
-  if (!text[5]) text[5] = 0;
-  if (!text[6]) text[6] = 0;
-  text[7] = text[7] ? Number(text[7]) : 1;
+  if (!hp) hp = 0;
+  if (!ca) ca = 0;
+  duplicate = duplicate ? Number(duplicate) : 1;
 
-  if (text[7] < 1) text[7] = 1;
-  console.log(text[7]);
+  if (duplicate < 1) duplicate = 1;
 
-  const my_list = await initLoader.load('test', text[2]);
-  if (!my_list) return bot.sendMessage(msg.chat.id, `Sessão de Iniciativa ${text[2]} não encontrado.`);
+  const my_list = await initLoader.load('test', sessao);
+  if (!my_list) return bot.sendMessage(msg.chat.id, `Sessão de Iniciativa ${sessao} não encontrado.`);
 
-  for (let i = 1; i <= text[7]; i++) {
-    const name = i == 1 ? text[3] : `${text[3]}${i}`;
-    const order = roller.roll(`1d20+${Number(text[4])}`);
-    my_list.creatures.push({ name, order: order.total, mod: Number(text[4]), hp: Number(text[5]), max_hp: Number(text[5]), ca: Number([text[6]]), no_hp });
-    bot.sendMessage(msg.chat.id, `Adicionado ${name} na lista ${text[2]}.`);
+  for (let i = 1; i <= duplicate; i++) {
+    const name = i == 1 ? creature : `${creature}${i}`;
+    const order = roller.roll(`1d20+${Number(mod)}`);
+    my_list.creatures.push({ name, order: order.total, mod: Number(text[4]), hp: Number(hp), max_hp: Number(text[5]), ca: Number(ca), no_hp });
+    bot.sendMessage(msg.chat.id, `Adicionado ${name} na lista ${sessao}.`);
   }
 
-  initLoader.save('test', text[2], my_list);
-}
+  initLoader.save('test', sessao, my_list);
+};

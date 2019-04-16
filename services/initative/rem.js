@@ -8,11 +8,14 @@ module.exports = async (bot, msg, text) => {
   const my_list = await initLoader.load('test', text[2]);
   if (!my_list) return bot.sendMessage(msg.chat.id, `Sessão de Iniciativa ${text[2]} não encontrado.`);
 
-  const c_i = my_list.creatures.findIndex((x) => x.name.toLowerCase() === text[3].toLowerCase());
-  if (c_i < 0) return bot.sendMessage(msg.chat.id, `Criatura ${text[3]} não encontrado na sessão ${text[2]}.`);
+  const creatures = text.slice(3);
+  const total_old = my_list.creatures.length;
 
-  my_list.creatures.splice(c_i, 1);
+  my_list.creatures = my_list.creatures.filter(x => !creatures.includes(x.name.toLowerCase()));
+  if (my_list.creatures.length == total_old) {
+    return bot.sendMessage(msg.chat.id, `Nenhuma criaturas citada foi encontrada na sessão ${text[2]}.`);
+  }
 
   initLoader.save('test', text[2], my_list).catch(console.log);
-  bot.sendMessage(msg.chat.id, `Criatura ${text[3]} removida da sessão ${text[2]}!`);
+  bot.sendMessage(msg.chat.id, `Total de ${my_list.creatures.length-total_old} criaturas removidas da sessão ${text[2]}!`);
 }
