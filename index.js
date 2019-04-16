@@ -1,17 +1,31 @@
 process.env.NTBA_FIX_319 = 1;
 const TelegramBot = require('node-telegram-bot-api');
-const bot = new TelegramBot('825396657:AAHoVYR2h2bFxMX8Ei61gO2jm0_LKCWl_GY', { polling: true });
+const bot = new TelegramBot(process.env.token, { polling: true });
 
 const initiative = require('./services/initative/index');
-const character = require('./services/beyond/index');
+const character  = require('./services/beyond/index');
 const roll       = require('./services/roll/roll');
 const rrroll     = require('./services/roll/rrroll');
-const check     = require('./services/roll/check');
-const save     = require('./services/roll/save');
+const check      = require('./services/roll/check');
+const save       = require('./services/roll/save');
+
+bot.sendStructedMessage = (msg, text) =>  {
+  this.sendMessage(msg.chat.id,
+    Array.isArray(text) ? text.join('\n') : text,
+    { parse_mode: 'MARKDOWN', disable_notification: true });
+};
+
 
 bot.onText(/^(\/r)\b/i, (msg) => {
-  console.log(msg);
   const text = msg.text.toLowerCase().split(' ');
+  if (text[2] === 'ajuda') {
+    bot.sendStructedMessage(msg, [
+      '[Comando] - [Descrição]',
+      '/r `<dado> adv [Desc]` - _Rolagem de dados com vantagem e descrição._',
+      '/r `<dado> dis [Desc]` - _Rolagem de dados com desvantagem e descrição._',
+    ]);
+  }
+
   roll(bot, msg, text);
 });
 
@@ -42,21 +56,13 @@ bot.onText(/^(\/personagem)\b/i, (msg) => {
 
 
 bot.onText(/^(\/ajuda)\b/i, (msg) => {
-  const text = [
+  bot.sendStructedMessage(msg, [
     '[Comando] - [Descrição]',
-    '/r <dado> [Desc] -  _Rolagem de dados com descrição._',
-    '/r <dado> adv [Desc] - _Rolagem de dados com vantagem e descrição._',
-    '/r <dado> dis [Desc] -  _Rolagem de dados com desvantagem e descrição._',
-    '/rrr 5 <dado> 10 -  _Multiplas rolagens N para DADO contra CD para sucesso._',
-    '/check <pericia/atributo> <adv/dis> - Faz um teste de perícia.',
-    '/save <atributo> <adv/dis> - Faz um teste de resistência.',
-    '/init ajuda -  _Instruções sobre comandos de iniciativa._',
-    '/personagem ajuda -  _Instruções sobre comandos de personagem._',
-  ].join('\n');
-
-  bot.sendMessage(
-    msg.chat.id,
-    text,
-    { parse_mode: 'MARKDOWN', disable_notification: true },
-  );
+    '/r `ajuda` - _Instruções sobre comandos de rolagem._',
+    '/rrr `5 <dado> 10` -  _Multiplas rolagens N para DADO contra CD para sucesso._',
+    '/check `<pericia/atributo> <adv/dis>` - Faz um teste de perícia.',
+    '/save `<atributo>` <adv/dis> - Faz um teste de resistência.',
+    '/init `ajuda` -  _Instruções sobre comandos de iniciativa._',
+    '/personagem `ajuda` -  _Instruções sobre comandos de personagem._',
+  ]);
 });

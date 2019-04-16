@@ -12,7 +12,7 @@ const removeCharacter   = require('./removeCharacter');
 module.exports = (bot, msg) => {
   const text = msg.text.split(' ');
 
-  if (!text[1]) return bot.sendMessage(msg.chat.id, 'Erro de sintaxe. Use: /personagem ajuda');
+  if (!text[1]) return bot.sendMessage(msg.chat.id, 'Erro de sintaxe. Use: `/personagem ajuda`');
 
   switch (text[1].toLowerCase()) {
     case 'associar': storeCharacter(bot, msg, text[2]); break;
@@ -34,7 +34,7 @@ module.exports = (bot, msg) => {
       bot.sendMessage(msg.chat.id, help_text);
       break;
     default:
-      bot.sendMessage(msg.chat.id, 'Parametro para /personagem não existe. Use /personagem ajuda');
+      bot.sendMessage(msg.chat.id, 'Parametro para /personagem não existe. Use `/personagem ajuda`');
       break;
   }
 };

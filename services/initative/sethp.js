@@ -5,8 +5,8 @@ const roller = new Roll.DiceRoller();
 
 module.exports = async (bot, msg, text) => {
   // /init add name creature mod hp CA
-  if (!text[2] || !text[3] || !text[4]) return bot.sendMessage(msg.chat.id, 'Erro de sintaxe. Use: /init sethp <sessão> <nome> <+/-hp>');
-  else if (isNaN(Number(text[4]))) return bot.sendMessage(msg.chat.id, 'O HP a ser modificado precisa ser um número!');
+  if (!text[2] || !text[3] || !text[4]) return bot.sendStructedMessage(msg.chat.id, 'Erro de sintaxe. Use: `/init sethp <sessão> <nome> <+/-hp>`');
+  else if (isNaN(Number(text[4]))) return bot.sendStructedMessage(msg.chat.id, 'O `HP` a ser modificado precisa ser um número!');
   text[4] = Number(text[4]);
 
   const my_list = await initLoader.load(msg.chat.id, text[2]);

@@ -18,6 +18,6 @@ module.exports = async (bot, msg, text) => {
   monster.temp_ca = text[4];
 
   initLoader.save(msg.chat.id, text[2], my_list);
-  bot.sendMessage(msg.chat.id, `CA de ${text[3]} agora é ${monster.ca + monster.temp_ca}`);
+  bot.sendMessage(msg.chat.id, `CA de ${text[3]} agora é \`${monster.ca + monster.temp_ca}\`[${monster.ca}]`);
 };
 
