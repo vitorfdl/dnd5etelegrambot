@@ -53,11 +53,11 @@ module.exports = (character, data_sheet) => {
     const stat_mod = character.stat_from_id(mod.stat);
 
     if (mod.type === 'bonus') {
-      set_calculated_stats[subtype] = (set_calculated_stats[subtype] || 0) + stat_mod;
+      calculated_stats[subtype] = (calculated_stats[subtype] || 0) + stat_mod;
     } else if (mod.type === 'damage') {
-      set_calculated_stats[`${subtype}-damage`] = (set_calculated_stats[`${subtype}-damage`] || 0) + stat_mod;
+      calculated_stats[`${subtype}-damage`] = (calculated_stats[`${subtype}-damage`] || 0) + stat_mod;
     } else if (mod.type === 'set') {
-      set_calculated_stats[subtype] = stat_mod;
+      calculated_stats[subtype] = stat_mod;
     }
   }
 
@@ -65,17 +65,19 @@ module.exports = (character, data_sheet) => {
   character.set_calculated_stats = set_calculated_stats;
 
   character._getStat = (stat, base = 0) => {
-    if (character.set_calculated_stats[stat]) {
+    if (character.set_calculated_stats.includes(stat)) {
       return character.calculated_stats[stat] || 0;
     }
     const bonus = character.calculated_stats[stat];
     return (base || 0) + (bonus || 0);
   };
 
+  console.log(calculated_stats);
   for (const [i, val] of ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'].entries()) {
     const base = data_sheet.stats.find(x => x.id === i + 1).value;
     const bonus = data_sheet.bonusStats.find(x => x.id === i + 1).value;
     const override = data_sheet.overrideStats.find(x => x.id === i + 1).value;
+    console.log(val, base, bonus, override, character._getStat(`${val}-score`, 0));
     character.stats[val] = override || character._getStat(`${val}-score`, base + bonus);
     character.stats[`${val}Mod`] = Math.floor((Number(character.stats[val]) - 10) / 2);
   }

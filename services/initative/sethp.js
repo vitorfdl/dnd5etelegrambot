@@ -9,7 +9,7 @@ module.exports = async (bot, msg, text) => {
   else if (isNaN(Number(text[4]))) return bot.sendMessage(msg.chat.id, `O HP a ser modificado precisa ser um número!`);
   text[4] = Number(text[4]);
 
-  const my_list = await initLoader.load('test', text[2]);
+  const my_list = await initLoader.load(msg.chat.id, text[2]);
   if (!my_list) return bot.sendMessage(msg.chat.id, `Sessão de Iniciativa ${text[2]} não encontrado.`);
 
   const monster = my_list.creatures.find((x) => x.name.toLowerCase() === text[3].toLowerCase());
@@ -17,6 +17,6 @@ module.exports = async (bot, msg, text) => {
 
   monster.hp += text[4];
 
-  initLoader.save('test', text[2], my_list);
+  initLoader.save(msg.chat.id, text[2], my_list);
   bot.sendMessage(msg.chat.id, `HP de ${text[3]} agoro é ${monster.hp} (${text[4] >= 0 ? `+${text[4]}` : text[4]}).`);
 }

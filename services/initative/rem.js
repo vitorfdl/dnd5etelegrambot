@@ -5,7 +5,7 @@ module.exports = async (bot, msg, text) => {
   if (!text[2]) return;
   else if (!text[3]) return bot.sendMessage(msg.chat.id, `Erro de sintaxe. Use: /init rem <sessão> <nome>`);
 
-  const my_list = await initLoader.load('test', text[2]);
+  const my_list = await initLoader.load(msg.chat.id, text[2]);
   if (!my_list) return bot.sendMessage(msg.chat.id, `Sessão de Iniciativa ${text[2]} não encontrado.`);
 
   const creatures = text.slice(3);
@@ -16,6 +16,6 @@ module.exports = async (bot, msg, text) => {
     return bot.sendMessage(msg.chat.id, `Nenhuma criaturas citada foi encontrada na sessão ${text[2]}.`);
   }
 
-  initLoader.save('test', text[2], my_list).catch(console.log);
+  initLoader.save(msg.chat.id, text[2], my_list).catch(console.log);
   bot.sendMessage(msg.chat.id, `Total de ${my_list.creatures.length-total_old} criaturas removidas da sessão ${text[2]}!`);
 }

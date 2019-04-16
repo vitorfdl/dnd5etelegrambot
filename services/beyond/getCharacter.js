@@ -54,6 +54,8 @@ async function GetDataSheet(url) {
   return character_sheet;
 }
 
+// GetDataSheet('6855744').then(console.log);
+
 module.exports = async function _(bot, msg, user_id, link = null) {
   if (!link) {
     const player_list = await storage.load();

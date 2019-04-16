@@ -5,6 +5,6 @@ module.exports = async (msg) => {
 
   if (!text[2]) return;
 
-  await initLoader.newDoc('test', text[2]);
+  await initLoader.newDoc(msg.chat.id, text[2]);
   msg.sendMessage(msg.chat.id, `Sessão de Iniciativa criado: ${text[2]}`);
 }
