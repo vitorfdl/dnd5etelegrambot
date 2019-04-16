@@ -54,7 +54,7 @@ async function GetDataSheet(url) {
   return character_sheet;
 }
 
-// GetDataSheet('6855744').then(e => console.log(e.skills));
+// GetDataSheet('7478665').then(e => console.log(e.armor));
 
 module.exports = async function _(bot, msg, user_id, link = null) {
   if (!link) {

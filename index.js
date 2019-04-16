@@ -1,6 +1,6 @@
 process.env.NTBA_FIX_319 = 1;
 const TelegramBot = require('node-telegram-bot-api');
-const bot = new TelegramBot(process.env.token, { polling: true });
+const bot = new TelegramBot(process.env.TOKEN, { polling: true });
 
 const initiative = require('./services/initative/index');
 const character  = require('./services/beyond/index');
@@ -8,9 +8,10 @@ const roll       = require('./services/roll/roll');
 const rrroll     = require('./services/roll/rrroll');
 const check      = require('./services/roll/check');
 const save       = require('./services/roll/save');
+const ficha       = require('./services/beyond/ficha');
 
 bot.sendStructedMessage = (msg, text) =>  {
-  this.sendMessage(msg.chat.id,
+  bot.sendMessage(msg.chat.id,
     Array.isArray(text) ? text.join('\n') : text,
     { parse_mode: 'MARKDOWN', disable_notification: true });
 };
@@ -54,6 +55,9 @@ bot.onText(/^(\/personagem)\b/i, (msg) => {
   character(bot, msg);
 });
 
+bot.onText(/^(\/ficha)\b/i, (msg) => {
+  ficha(bot, msg);
+});
 
 bot.onText(/^(\/ajuda)\b/i, (msg) => {
   bot.sendStructedMessage(msg, [
