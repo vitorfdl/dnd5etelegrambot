@@ -62,7 +62,7 @@ module.exports = async function _(bot, msg, user_id, link = null) {
   
     link = player_list[user_id];
     if (!link) {
-      bot.sendMessage(msg.chat.id, 'Não existe uma ficha associada ao seu usuário. Use /personagem <beyond_link>');
+      bot.sendMessage(msg.chat.id, 'Não existe uma ficha associada ao seu usuário. Use /personagem associar <beyond_link>');
       return;
     }
   }

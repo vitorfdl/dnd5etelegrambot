@@ -18,6 +18,6 @@ module.exports = async (bot, msg, text) => {
   monster.hp += text[4];
 
   initLoader.save(msg.chat.id, text[2], my_list);
-  bot.sendMessage(msg.chat.id, `HP de ${text[3]} agoro é ${monster.hp} (${text[4] >= 0 ? `+${text[4]}` : text[4]}).`);
+  bot.sendMessage(msg.chat.id, `HP de ${text[3]} agora é ${monster.hp} (${text[4] >= 0 ? `+${text[4]}` : text[4]}).`);
 };
 

@@ -14,7 +14,7 @@ module.exports = async (bot, msg, text) => {
   }
 
   my_list.creatures = my_list.creatures.sort((a, b) => a.order < b.order);
-  const to_channel = my_list.creatures.map(x => `${x.order}: *${x.name}* <${x.hp}/${x.max_hp} HP> (AC ${x.ca})`).join('\n');
+  const to_channel = my_list.creatures.map(x => `${x.order}: *${x.name}* <${x.hp}/${x.max_hp} HP> (AC ${x.ca + Number(x.temp_ca || 0)})`).join('\n');
   return bot.sendMessage(msg.chat.id, `Ordem de Iniciativa:\n${to_channel}`, { parse_mode: 'Markdown', disable_notification: true });
 };
 

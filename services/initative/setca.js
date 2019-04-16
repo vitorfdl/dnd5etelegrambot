@@ -15,9 +15,9 @@ module.exports = async (bot, msg, text) => {
   const monster = my_list.creatures.find(x => x.name.toLowerCase() === text[3].toLowerCase());
   if (!monster) return bot.sendMessage(msg.chat.id, `Criatura ${text[3]} não encontrado na sessão ${text[2]}.`);
 
-  monster.ca = text[4];
+  monster.temp_ca = text[4];
 
   initLoader.save(msg.chat.id, text[2], my_list);
-  bot.sendMessage(msg.chat.id, `CA de ${text[3]} agoro é ${monster.ca}`);
+  bot.sendMessage(msg.chat.id, `CA de ${text[3]} agora é ${monster.ca + monster.temp_ca}`);
 };
 
