@@ -28,7 +28,7 @@ module.exports = (bot, msg, params, datasheet) => {
   const dice = `${res.notation}`;
   let quote = `<a href="tg://user?id=${msg.from.id}">${msg.from.first_name}</a>${extra}`;
   if (datasheet) {
-    quote = `<a href="tg://user?id=${msg.from.id}">${msg.from.first_name}</a> - ${datasheet.name} está realizando um teste de ${extra}`;
+    quote = `<a href="tg://user?id=${msg.from.id}">${msg.from.first_name}</a> - ${datasheet.name} realiza um teste ${extra}`;
   }
 
   bot.deleteMessage(msg.chat.id, msg.message_id).catch(() => null);

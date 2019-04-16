@@ -19,8 +19,8 @@ bot.sendStructedMessage = (msg, text) =>  {
 
 bot.onText(/^(\/r)\b/i, (msg) => {
   const text = msg.text.toLowerCase().split(' ');
-  if (text[2] === 'ajuda') {
-    bot.sendStructedMessage(msg, [
+  if (text[1] === 'ajuda') {
+    return bot.sendStructedMessage(msg, [
       '[Comando] - [Descrição]',
       '/r `<dado> adv [Desc]` - _Rolagem de dados com vantagem e descrição._',
       '/r `<dado> dis [Desc]` - _Rolagem de dados com desvantagem e descrição._',
