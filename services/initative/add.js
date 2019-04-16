@@ -41,9 +41,9 @@ module.exports = async (bot, msg, text) => {
     const name = i === 1 ? creature : `${creature}${i}`;
     const order = roller.roll(`1d20+${Number(mod)}`);
 
-    let exist = my_list.creatures.find(x => x.name === name);
-    if (exist) {
-      exist = { ...exist, name, mod: Number(mod), max_hp: Number(hp), ca: Number(ca), no_hp };
+    const e_i = my_list.creatures.findeIndex(x => x.name === name);
+    if (e_i) {
+      my_list.creatures[e_i] = { ...my_list.creatures[e_i], name, mod: Number(mod), max_hp: Number(hp), ca: Number(ca), no_hp };
       bot.sendMessage(msg.chat.id, `Atualizado ${name} na lista ${sessao}.`);
     } else {
       my_list.creatures.push({ name, order: order.total, mod: Number(mod), hp: Number(hp), max_hp: Number(hp), temp_ca: 0, ca: Number(ca), no_hp });
