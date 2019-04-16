@@ -39,7 +39,7 @@ module.exports = async (bot, msg, text) => {
 
   for (let i = 1; i <= duplicate; i++) {
     const name = i === 1 ? creature : `${creature}${i}`;
-    const order = roller.roll(`1d20+${Number(mod)}`);
+    const order = roller.roll(`1d20${Number(mod) >= 0 ? `+${Number(mod)}` : Number(mod)}`);
 
     const e_i = my_list.creatures.findIndex(x => x.name === name);
     if (e_i >= 0) {

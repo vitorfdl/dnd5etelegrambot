@@ -13,7 +13,7 @@ module.exports = async (bot, msg, text) => {
     return bot.sendMessage(msg.chat.id, `Ordem de Iniciativa [${text[2]}]:\n<Vazio>`);
   }
   my_list.creatures = my_list.creatures.map((x) => {
-    const roll = roller.roll(`1d20+${x.mod ? `+${x.mod}` : x.mod}`);
+    const roll = roller.roll(`1d20${x.mod >= 0 ? `|${x.mod}` : x.mod}`);
     return { ...x, order: roll.total, roll: roll.output };
   });
   initLoader.save(msg.chat.id, text[2], my_list);
