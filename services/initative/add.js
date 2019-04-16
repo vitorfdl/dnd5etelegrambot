@@ -20,13 +20,13 @@ module.exports = async (bot, msg, text) => {
     if (!datasheet) return;
 
     creature = datasheet.name;
-    mod = datasheet.skills.initiative;
+    mod = Number(datasheet.skills.initiative);
     hp = datasheet.hp;
     ca = datasheet.armor;
   }
 
   if (!creature) return bot.sendMessage(msg.chat.id, 'Erro de sintaxe. Use: /init add <sessão> <nome> <mod> <hp> <CA> <DuplicarN>');
-  else if (!mod || isNaN(Number(mod))) return bot.sendMessage(msg.chat.id, `O Mod: ${mod} não é um número.`);
+  else if (Number.isNaN(Number(mod))) return bot.sendMessage(msg.chat.id, `O Mod: ${mod} não é um número.`);
 
   if (!hp) hp = 0;
   if (!ca) ca = 0;
@@ -43,10 +43,10 @@ module.exports = async (bot, msg, text) => {
 
     let exist = my_list.creatures.find(x => x.name === name);
     if (exist) {
-      exist = { name, order: order.total, mod: Number(text[4]), hp: Number(hp), max_hp: Number(hp), ca: Number(ca), no_hp };
+      exist = { name, order: order.total, mod: Number(mod), hp: Number(hp), max_hp: Number(hp), ca: Number(ca), no_hp };
       bot.sendMessage(msg.chat.id, `Atualizado ${name} na lista ${sessao}.`);
     } else {
-      my_list.creatures.push({ name, order: order.total, mod: Number(text[4]), hp: Number(hp), max_hp: Number(hp), ca: Number(ca), no_hp });
+      my_list.creatures.push({ name, order: order.total, mod: Number(mod), hp: Number(hp), max_hp: Number(hp), ca: Number(ca), no_hp });
       bot.sendMessage(msg.chat.id, `Adicionado ${name} na lista ${sessao}.`);
     }
   }
