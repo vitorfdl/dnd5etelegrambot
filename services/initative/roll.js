@@ -12,11 +12,14 @@ module.exports = async (bot, msg, text) => {
   if (!my_list.creatures[0]) {
     return bot.sendMessage(msg.chat.id, `Ordem de Iniciativa [${text[2]}]:\n<Vazio>`);
   }
-  my_list.creatures = my_list.creatures.map(x => ({ ...x, order: roller.roll(`1d20+${x.mod}`).total }));
+  my_list.creatures = my_list.creatures.map((x) => {
+    const roll = roller.roll(`1d20+${x.mod}`);
+    return { ...x, order: roll.total, roll: roll.output };
+  });
   initLoader.save(msg.chat.id, text[2], my_list);
 
   my_list.creatures = my_list.creatures.sort((a, b) => a.order < b.order);
-  const to_channel = my_list.creatures.map(x => `${x.output}: *${x.name}* <${x.hp}/${x.max_hp} HP> (AC ${x.ca})`).join('\n');
+  const to_channel = my_list.creatures.map(x => `${x.roll}: *${x.name}* <${x.hp}/${x.max_hp} HP> (AC ${x.ca})`).join('\n');
   return bot.sendMessage(msg.chat.id, `Nova Ordem de Iniciativa:\n${to_channel}`, { parse_mode: 'Markdown', disable_notification: true });
 };
 
