@@ -43,13 +43,13 @@ module.exports = (character, data_sheet) => {
     if ('ability-checks' in profs && !skill.includes('Save')) {
       relevantprof = Math.max(relevantprof, profs['ability-checks'] || 0);
     }
-    if ('ability-checks' in profs && skill.includes('Save')) {
+    if ('saving-throws' in profs && skill.includes('Save')) {
       relevantprof = Math.max(relevantprof, profs['saving-throws'] || 0);
     }
     if ('ability-checks' in bonuses && !skill.includes('Save')) {
       relevantbonus += bonuses['ability-checks'] || 0;
     }
-    if ('saving-checks' in bonuses && skill.includes('Save')) {
+    if ('saving-throws' in bonuses && skill.includes('Save')) {
       relevantbonus += bonuses['saving-throws'] || 0;
     }
 

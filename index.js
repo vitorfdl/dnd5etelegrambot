@@ -10,22 +10,23 @@ const check     = require('./services/roll/check');
 const save     = require('./services/roll/save');
 
 bot.onText(/^(\/r)\b/i, (msg) => {
-  const text = msg.text.split(' ');
+  console.log(msg);
+  const text = msg.text.toLowerCase().split(' ');
   roll(bot, msg, text);
 });
 
 bot.onText(/^(\/rrr)\b/i, (msg) => {
-  const text = msg.text.split(' ');
+  const text = msg.text.toLowerCase().split(' ');
   rrroll(bot, msg, text);
 });
 
 bot.onText(/^(\/check)\b/i, async (msg) => {
-  const text = msg.text.split(' ');
+  const text = msg.text.toLowerCase().split(' ');
   check(bot, msg, text);
 });
 
 bot.onText(/^(\/save)\b/i, async (msg) => {
-  const text = msg.text.split(' ');
+  const text = msg.text.toLowerCase().split(' ');
   save(bot, msg, text);
 });
 
@@ -47,7 +48,10 @@ bot.onText(/^(\/ajuda)\b/i, (msg) => {
     '/r <dado> adv [Desc] - _Rolagem de dados com vantagem e descrição._',
     '/r <dado> dis [Desc] -  _Rolagem de dados com desvantagem e descrição._',
     '/rrr 5 <dado> 10 -  _Multiplas rolagens N para DADO contra CD para sucesso._',
+    '/check <pericia/atributo> <adv/dis> - Faz um teste de perícia.',
+    '/save <atributo> <adv/dis> - Faz um teste de resistência.',
     '/init ajuda -  _Instruções sobre comandos de iniciativa._',
+    '/personagem ajuda -  _Instruções sobre comandos de personagem._',
   ].join('\n');
 
   bot.sendMessage(

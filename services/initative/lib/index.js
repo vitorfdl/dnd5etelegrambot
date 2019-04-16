@@ -15,7 +15,6 @@ async function save(path, name, param) {
 async function load(path, name) {
   path = _fixPath(path);
 
-  console.log('here');
   let rawdata;
   try {
     rawdata = fs.readFileSync(`./data/${path}/${name}.json`);

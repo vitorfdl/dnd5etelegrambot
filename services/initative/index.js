@@ -11,7 +11,6 @@ const sethp  = require('./sethp');
 
 module.exports = (bot, msg) => {
   const text = msg.text.split(' ');
-
   if (!text[1]) return bot.sendMessage(msg.chat.id, 'Erro de sintaxe. Use: /init ajuda');
 
   switch (text[1].toLowerCase()) {
@@ -28,6 +27,7 @@ module.exports = (bot, msg) => {
       const help_text = [
         '[Comando] - [Descrição]',
         '/init novo <sessão> - Inicia uma sessão com nome <sessão>',
+        '/init add <sessão> pg - Adiciona personagem do beyond na sessão.',
         '/init add <sessão> <nome> <mod> - Adiciona criatura na sessão.',
         '/init add <sessão> <nome> <mod> [hp] [CA] [DuplicarN] - Descritivo.',
         '/init sethp <sessão> <nome> <+/-hp> - Aumenta ou reduz HP do alvo.',

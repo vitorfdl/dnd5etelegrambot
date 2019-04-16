@@ -1,6 +1,6 @@
 /* eslint-disable no-continue */
 /* eslint-disable guard-for-in */
-const data_info = require('./info.json');
+// const data_info = require('./info.json');
 
 module.exports = (character, data_sheet) => {
   const min_base_armor = character._getStat('minimum-base-armor');

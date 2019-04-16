@@ -72,12 +72,10 @@ module.exports = (character, data_sheet) => {
     return (base || 0) + (bonus || 0);
   };
 
-  console.log(calculated_stats);
   for (const [i, val] of ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'].entries()) {
     const base = data_sheet.stats.find(x => x.id === i + 1).value;
     const bonus = data_sheet.bonusStats.find(x => x.id === i + 1).value;
     const override = data_sheet.overrideStats.find(x => x.id === i + 1).value;
-    console.log(val, base, bonus, override, character._getStat(`${val}-score`, 0));
     character.stats[val] = override || character._getStat(`${val}-score`, base + bonus);
     character.stats[`${val}Mod`] = Math.floor((Number(character.stats[val]) - 10) / 2);
   }
