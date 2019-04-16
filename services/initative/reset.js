@@ -11,5 +11,7 @@ module.exports = async (bot, msg, text) => {
   }
   my_list.creatures = my_list.creatures.map(x => ({ ...x, temp_ca: 0, hp: x.max_hp }));
   bot.sendMessage(msg.chat.id, `HP e CA resetados na sessão [${text[2]}]`);
+
+  initLoader.save(msg.chat.id, text[2], my_list);
 };
 
