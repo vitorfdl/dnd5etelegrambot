@@ -5,8 +5,8 @@ const roller = new Roll.DiceRoller();
 
 module.exports = async (bot, msg, text) => {
   // /init add name creature mod hp CA
-  if (!text[2] || !text[3] || !text[4]) return bot.sendMessage(msg.chat.id, 'Erro de sintaxe. Use: /init sethp <sessão> <nome> <+/-hp>');
-  else if (isNaN(Number(text[4]))) return bot.sendMessage(msg.chat.id, 'O HP a ser modificado precisa ser um número!');
+  if (!text[2] || !text[3] || !text[4]) return bot.sendMessage(msg.chat.id, 'Erro de sintaxe. Use: /init setca <sessão> <nome> <ca>');
+  else if (Number.isNaN(Number(text[4]))) return bot.sendMessage(msg.chat.id, 'O CA a ser modificado precisa ser um número!');
   text[4] = Number(text[4]);
 
   const my_list = await initLoader.load(msg.chat.id, text[2]);
@@ -15,9 +15,9 @@ module.exports = async (bot, msg, text) => {
   const monster = my_list.creatures.find(x => x.name.toLowerCase() === text[3].toLowerCase());
   if (!monster) return bot.sendMessage(msg.chat.id, `Criatura ${text[3]} não encontrado na sessão ${text[2]}.`);
 
-  monster.hp += text[4];
+  monster.ca = text[4];
 
   initLoader.save(msg.chat.id, text[2], my_list);
-  bot.sendMessage(msg.chat.id, `HP de ${text[3]} agoro é ${monster.hp} (${text[4] >= 0 ? `+${text[4]}` : text[4]}).`);
+  bot.sendMessage(msg.chat.id, `CA de ${text[3]} agoro é ${monster.ca}`);
 };
 

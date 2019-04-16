@@ -19,7 +19,7 @@ module.exports = async (bot, msg, text) => {
     const datasheet = await getCharacter(bot, msg, msg.from.id);
     if (!datasheet) return;
 
-    creature = datasheet.name;
+    creature = datasheet.name.split(' ')[0];
     mod = Number(datasheet.skills.initiative);
     hp = datasheet.hp;
     ca = datasheet.armor;
@@ -43,7 +43,7 @@ module.exports = async (bot, msg, text) => {
 
     let exist = my_list.creatures.find(x => x.name === name);
     if (exist) {
-      exist = { name, order: order.total, mod: Number(mod), hp: Number(hp), max_hp: Number(hp), ca: Number(ca), no_hp };
+      exist = { ...exist, name, mod: Number(mod), hp: Number(hp), max_hp: Number(hp), ca: Number(ca), no_hp };
       bot.sendMessage(msg.chat.id, `Atualizado ${name} na lista ${sessao}.`);
     } else {
       my_list.creatures.push({ name, order: order.total, mod: Number(mod), hp: Number(hp), max_hp: Number(hp), ca: Number(ca), no_hp });

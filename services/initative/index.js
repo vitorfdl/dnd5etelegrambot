@@ -8,6 +8,7 @@ const roll  = require('./roll');
 const destroy  = require('./destroy');
 const copy  = require('./copy');
 const sethp  = require('./sethp');
+const setca  = require('./setca');
 
 module.exports = (bot, msg) => {
   const text = msg.text.split(' ');
@@ -23,6 +24,7 @@ module.exports = (bot, msg) => {
     case 'destroy':  destroy(bot, msg, text); break;
     case 'copy':  copy(bot, msg, text); break;
     case 'sethp':  sethp(bot, msg, text); break;
+    case 'setca':  setca(bot, msg, text); break;
     case 'ajuda':
       const help_text = [
         '[Comando] - [Descrição]',
@@ -31,6 +33,7 @@ module.exports = (bot, msg) => {
         '/init add <sessão> <nome> <mod> - Adiciona criatura na sessão.',
         '/init add <sessão> <nome> <mod> [hp] [CA] [DuplicarN] - Descritivo.',
         '/init sethp <sessão> <nome> <+/-hp> - Aumenta ou reduz HP do alvo.',
+        '/init setca <sessão> <nome> <CA> - Altera CA do alvo.',
         '/init list - Lista todas as sessões',
         '/init list <sessão> - Lista ordem de iniciativa da sessão.',
         '/init rem <sessão> <nomes...> - Remove criatura da sessão.',
