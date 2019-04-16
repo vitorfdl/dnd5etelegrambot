@@ -65,6 +65,7 @@ bot.onText(/^(\/ajuda)\b/i, (msg) => {
     '/r `ajuda` - _Instruções sobre comandos de rolagem._',
     '/rrr `5 <dado> 10` -  _Multiplas rolagens N para DADO contra CD para sucesso._',
     '/check `<pericia/atributo> <adv/dis>` - Faz um teste de perícia.',
+    '/ficha - Exibe informações sobre sua ficha.',
     '/save `<atributo>` <adv/dis> - Faz um teste de resistência.',
     '/init `ajuda` -  _Instruções sobre comandos de iniciativa._',
     '/personagem `ajuda` -  _Instruções sobre comandos de personagem._',

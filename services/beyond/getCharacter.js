@@ -23,7 +23,7 @@ async function GetDataSheet(url) {
     }
   });
 
-  if (!data_sheet) return;
+  if (!data_sheet || typeof data_sheet !== 'object') throw 'Não foi possivel ler ficha registrada.';
 
   let character_sheet = {
     name: data_sheet.name,
