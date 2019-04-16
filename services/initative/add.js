@@ -42,7 +42,7 @@ module.exports = async (bot, msg, text) => {
     const order = roller.roll(`1d20+${Number(mod)}`);
 
     const e_i = my_list.creatures.findeIndex(x => x.name === name);
-    if (e_i) {
+    if (e_i >= 0) {
       my_list.creatures[e_i] = { ...my_list.creatures[e_i], name, mod: Number(mod), max_hp: Number(hp), ca: Number(ca), no_hp };
       bot.sendMessage(msg.chat.id, `Atualizado ${name} na lista ${sessao}.`);
     } else {
