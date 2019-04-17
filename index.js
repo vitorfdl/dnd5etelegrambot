@@ -1,7 +1,7 @@
 process.env.NTBA_FIX_319 = 1;
 require('dotenv').config();
 const TelegramBot = require('node-telegram-bot-api');
-const bot = new TelegramBot(process.env.TOKEN, { polling: true });
+const bot = new TelegramBot(process.env.TALEGRAM, { polling: true });
 const TagoDevice = require('tago/device');
 const tago = new TagoDevice(process.env.TAGO);
 
@@ -61,7 +61,7 @@ bot.onText(/^(\/init)\b/i, (msg) => {
 
 
 bot.onText(/^(\/personagem)\b/i, (msg) => {
-  const text = msg.text.toLowerCase().split(' ');
+  const text = msg.text.split(' ');
   storeCharacter(bot, msg, text[1]);
 });
 
@@ -89,7 +89,7 @@ bot.onText(/^(\/ajuda)\b/i, async (msg) => {
     '',
     '*Jogo*',
     '/init `ajuda` -  _Instruções sobre comandos de iniciativa._',
-    '/personagem `<link>` -  _Associa ficha Beyond a você._',
+    '/personagem `<link>` -  _Associa ficha Beyond/_[gsheets](https://docs.google.com/spreadsheets/d/14Mg4BsRq3xfMTby9Iqxw4Webrm8x6THFBcjVqKvGJ70/edit#gid=1648035983) _a você._',
     '/ficha - _Exibe informações sobre sua ficha_.',
     '',
     '*Pesquisa*',

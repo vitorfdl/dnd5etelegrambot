@@ -1,4 +1,5 @@
 const axios        = require('axios');
+const GSheets      = require('../gsheets/getCharacter');
 const getStat      = require('./lib/getStat');
 const getLevels    = require('./lib/getLevels');
 const getEquipment = require('./lib/getEquipment');
@@ -13,7 +14,7 @@ async function getBeyondJSON(character_id) {
 
 
 async function GetDataSheet(url) {
-  const character_id = url.split('/').pop();
+  const [, character_id] = url.match(/\/characters\/(\d+)/);
 
   const data_sheet = await getBeyondJSON(character_id).catch((e) => {
     if (e.response.status === 404) {
@@ -54,21 +55,31 @@ async function GetDataSheet(url) {
   return character_sheet;
 }
 
-// GetDataSheet('6193599').then(e => console.log(e.hp, e.armor));
+// GetDataSheet('/characters/6193599').then(e => console.log(e.hp, e.armor));
 
 module.exports = async function _(bot, msg, user_id, link = null) {
   if (!link) {
     link = await storage.load(user_id);
-    
+
     if (!link) {
       bot.sendMessage(msg.chat.id, 'Não existe uma ficha associada ao seu usuário.\nUse /personagem associar <beyond_link>');
       return;
     }
   }
 
-  const data = await GetDataSheet(link).catch((e) => {
-    bot.sendMessage(msg.chat.id, e.message);
-  });
+  let data;
+  if (link.match(/\/characters\/(\d+)/)) {
+    data = await GetDataSheet(link).catch((e) => {
+      bot.sendStructedMessage(msg, e.message);
+      return null;
+    });
+  } else {
+    data = await GSheets(link).catch((e) => {
+      console.log(e);
+      bot.sendStructedMessage(msg, e.message);
+      return null;
+    });
+  }
 
   return data;
 };

@@ -4,7 +4,7 @@ const getCharacter = require('./getCharacter');
 module.exports = async (bot, msg, link) => {
   if (!link) {
     return bot.sendStructedMessage(msg, 'Sintaxe incorreta. Use `/personagem <link>`.');
-  } else if (!link.includes('https://www.dndbeyond.com/')) {
+  } else if (!link.match(/\/characters\/(\d+)/) && !link.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/)) {
     return bot.sendStructedMessage(msg, 'Link inválido. Utilize uma rota do Beyond DnD 5e.\nUse `/personagem <link>`.');
   }
 
