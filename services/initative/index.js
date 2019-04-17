@@ -25,8 +25,8 @@ module.exports = (bot, msg) => {
     case 'reset':   reset(bot, msg, text); break;
     case 'rolar':   roll(bot, msg, text); break;
     case 'criar':    newS(bot, msg, text); break;
-    case 'destroy': destroy(bot, msg, text); break;
-    case 'copy':    copy(bot, msg, text); break;
+    case 'deletar': destroy(bot, msg, text); break;
+    case 'copiar':    copy(bot, msg, text); break;
     case 'hp':      sethp(bot, msg, text); break;
     case 'ca':      setca(bot, msg, text); break;
     case 'setar':   setar(bot, msg, text); break;
@@ -36,9 +36,9 @@ module.exports = (bot, msg) => {
         '*Criação de Sessões*',
         '/init- Lista todas as sessões',
         '/init `criar <sessão>` - Inicia uma sessão com nome <sessão>',
-        '/init `destroy <sessão>` - Deleta completamente a sessão.',
+        '/init `deletar <sessão>` - Deleta completamente a sessão.',
         '/init `setar <sessão>` - Seta sessão como ativa na sala.',
-        '/init `copy <sessão> <novasessão>` - Copia sessão para nova.',
+        '/init `copiar <sessão> <novasessão>` - Copia sessão para nova.',
         '',
         '*Sessão Ativa*',
         '/init `add` - Adiciona/Atualiza seu personagem do beyond na sessão.',

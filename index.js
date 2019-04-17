@@ -25,12 +25,11 @@ bot.onText(/^(\/r)\b/i, (msg) => {
   if (text[1] === 'ajuda') {
     return bot.sendStructedMessage(msg, [
       '[Comando] - [Descrição]',
-      '/r `<dado> van [Desc]` - _Rolagem de dados com vantagem e descrição._',
-      '/r `<dado> des [Desc]` - _Rolagem de dados com desvantagem e descrição._',
-      '/r `<dado>-L - _Remove o menor resultado._ ',
-      '/r `<dado>-H - _Remove o menor maior._ ',
-      '/r `<dado>! - _Explode o dado.._ ',
-      '/r `<dado>! - _Explode o dado.._ ',
+      '/r `<dado> van [Desc]` - _Rolagem de dados com vantagem._',
+      '/r `<dado> des [Desc]` - _Rolagem de dados com desvantagem._',
+      '/r `<dado>-L` - _Remove o menor resultado._ ',
+      '/r `<dado>-H` - _Remove o menor maior._ ',
+      '/r `<dado>!` - _Explode o dado.._ ',
     ]);
   }
 
