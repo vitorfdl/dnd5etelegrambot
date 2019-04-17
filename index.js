@@ -12,6 +12,7 @@ const rrroll     = require('./services/roll/rrroll');
 const check      = require('./services/roll/check');
 const save       = require('./services/roll/save');
 const ficha      = require('./services/beyond/ficha');
+const storeCharacter   = require('./services/storeCharacter');
 
 bot.sendStructedMessage = (msg, text) =>  {
   bot.sendMessage(msg.chat.id,
@@ -29,6 +30,7 @@ bot.onText(/^(\/r)\b/i, (msg) => {
       '/r `<dado> des [Desc]` - _Rolagem de dados com desvantagem._',
       '/r `<dado>-L` - _Remove o menor resultado._ ',
       '/r `<dado>-H` - _Remove o menor maior._ ',
+      '/r `<dado>!` - _Explode o dado.._ ',
       '/r `<dado>!` - _Explode o dado.._ ',
     ]);
   }
@@ -57,7 +59,7 @@ bot.onText(/^(\/init)\b/i, (msg) => {
 
 
 bot.onText(/^(\/personagem)\b/i, (msg) => {
-  character(bot, msg);
+  storeCharacter(bot, msg, msg[1]);
 });
 
 bot.onText(/^(\/ficha)\b/i, (msg) => {
@@ -68,11 +70,11 @@ bot.onText(/^(\/ajuda)\b/i, async (msg) => {
   bot.sendStructedMessage(msg, [
     '[Comando] - [Descrição]',
     '/init `ajuda` -  _Instruções sobre comandos de iniciativa._',
-    '/personagem `ajuda` -  _Instruções sobre comandos de personagem._',
     '/r `ajuda` - _Instruções sobre comandos de rolagem._',
     '/rrr `<N> <dado> <CA>` -  _Multiplas rolagens de dados contra CA._',
     '/check `<ajuda> <adv/dis>` - _Faz um teste de perícia_.',
     '/save `<atributo> <adv/dis>` - _Faz um teste de resistência_.',
+    '/personagem `<link>` -  _Associa ficha Beyond a você._',
     '/ficha - _Exibe informações sobre sua ficha_.',
   ]);
 

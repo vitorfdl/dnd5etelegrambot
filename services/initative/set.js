@@ -10,7 +10,7 @@ module.exports = async (bot, msg, [,, sessao]) => {
   if (!exists) return bot.sendStructedMessage(msg, 'Sessão não encontrada. Use: `/init setar <sessão>');
 
   initLoader.changeSession(msg.chat.id, sessao);
-  bot.sendStructedMessage(msg, `Sessão ativa agora é ${exists.name}`);
+  await bot.sendStructedMessage(msg, `Sessão ativa agora é ${exists.name}`);
   return initList(bot, msg, [], exists);
 };
 

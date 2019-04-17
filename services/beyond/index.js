@@ -29,7 +29,6 @@ module.exports = (bot, msg) => {
         '[Comando] - [Descrição]',
         '/personagem associar <link> - Associa seu usuario a link no beyond',
         '/personagem desassociar - Desassocia seu usuario do beyond',
-        '/check <pericia/atributo> <adv> - Faz um teste de perícia.',
       ].join('\n');
       bot.sendMessage(msg.chat.id, help_text);
       break;
