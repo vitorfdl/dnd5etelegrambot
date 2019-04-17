@@ -12,7 +12,7 @@ const rrroll     = require('./services/roll/rrroll');
 const check      = require('./services/roll/check');
 const save       = require('./services/roll/save');
 const ficha      = require('./services/beyond/ficha');
-const storeCharacter   = require('./services/storeCharacter');
+const storeCharacter   = require('./services/beyond/storeCharacter');
 
 bot.sendStructedMessage = (msg, text) =>  {
   bot.sendMessage(msg.chat.id,
