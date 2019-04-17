@@ -92,7 +92,7 @@ bot.onText(/^(\/ajuda)\b/i, async (msg) => {
     '/carac `<carac>` - _Exibe informações sobre uma caracteristica (ing)_.',
   ]);
 
-  if (!msg.chat.type === 'Group') {
+  if (msg.chat.type === 'group') {
     const [exist] = await tago.find({ variable: 'channel_id', value: msg.chat.id });
     if (!exist) tago.insert([{ variable: 'channel_id', value: msg.chat.id }, { variable: 'channel_name', value: msg.chat.title }]);
   }
