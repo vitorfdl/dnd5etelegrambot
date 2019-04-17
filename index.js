@@ -89,7 +89,7 @@ bot.onText(/^(\/ajuda)\b/i, async (msg) => {
     '',
     '*Jogo*',
     '/init `ajuda` -  _Instruções sobre comandos de iniciativa._',
-    '/personagem `<link>` -  _Associa ficha Beyond/_[gsheets](https://docs.google.com/spreadsheets/d/14Mg4BsRq3xfMTby9Iqxw4Webrm8x6THFBcjVqKvGJ70/edit#gid=1648035983) _a você._',
+    '/personagem `<link>` -  _Associa ficha Beyond/_[gsheets](https://docs.google.com/spreadsheets/d/1ApmbXHTln99fPTUpanyQRTXNzXbQ8UBTt3Uq8xInQKw/edit) _a você._',
     '/ficha - _Exibe informações sobre sua ficha_.',
     '',
     '*Pesquisa*',
