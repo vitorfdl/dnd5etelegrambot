@@ -6,7 +6,6 @@ const TagoDevice = require('tago/device');
 const tago = new TagoDevice(process.env.TAGO);
 
 const initiative = require('./services/initative/index');
-const character  = require('./services/beyond/index');
 const roll       = require('./services/roll/roll');
 const rrroll     = require('./services/roll/rrroll');
 const check      = require('./services/roll/check');
@@ -78,6 +77,6 @@ bot.onText(/^(\/ajuda)\b/i, async (msg) => {
     '/ficha - _Exibe informações sobre sua ficha_.',
   ]);
 
-  const [exist] = await tago.find({ variable: 'channels', value: tago.chat.id });
-  if (!exist) tago.insert({ variable: 'channels', value: tago.chat.id });
+  const [exist] = await tago.find({ variable: 'channels', value: msg.chat.id });
+  if (!exist) tago.insert({ variable: 'channels', value: msg.chat.id });
 });
