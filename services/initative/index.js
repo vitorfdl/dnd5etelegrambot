@@ -34,13 +34,14 @@ module.exports = (bot, msg) => {
     case 'ajuda':
       const help_text = [
         '*Criação de Sessões*',
-        '/init - _Lista todas as sessões_',
+        '/init `list` - _Lista todas as sessões._',
         '/init `criar <sessão>` - _Inicia uma sessão com nome <sessão>_',
         '/init `deletar <sessão>` - _Deleta completamente a sessão._',
         '/init `setar <sessão>` - _Seta sessão como ativa na sala._',
         '/init `copiar <sessão> <novasessão>` - _Copia sessão para nova._',
         '',
         '*Sessão Ativa*',
+        '/init - _Lista ordem de iniciativa da sessão._',
         '/init `add` - _Adiciona/Atualiza seu personagem do beyond na sessão._',
         '/init `add <nome> <mod>` - _Adiciona PJ/criatura._',
         '       `-h <hp>` - _Seta HP da criatura_',
@@ -49,7 +50,6 @@ module.exports = (bot, msg) => {
         '/init `rem <nomes...>` - _Remove criatura da sessão._',
         '/init `hp <nome> <+/-hp>` - _Aumenta ou reduz HP do alvo._',
         '/init `ca <nome> <CA>` - _Altera CA do alvo._',
-        '/init `list` - _Lista ordem de iniciativa da sessão._',
         '/init `rolar` - _Rola novamente os dados de iniciativa._',
         '      `-v <nomes..>` - _Citados rolam em vantagem._',
         '      `-d <nomes..>` - _Citados rolam em desvantagem._',
