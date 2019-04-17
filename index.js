@@ -78,6 +78,8 @@ bot.onText(/^(\/ajuda)\b/i, async (msg) => {
     '/ficha - _Exibe informações sobre sua ficha_.',
   ]);
 
-  const [exist] = await tago.find({ variable: 'channels', value: msg.chat.id });
-  if (!exist) tago.insert({ variable: 'channels', value: msg.chat.id });
+  if (!msg.chat.type === 'Group') {
+    const [exist] = await tago.find({ variable: 'channel_id', value: msg.chat.id });
+    if (!exist) tago.insert([{ variable: 'channel_id', value: msg.chat.id }, { variable: 'channel_name', value: msg.chat.title }]);
+  }
 });
