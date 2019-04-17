@@ -98,6 +98,7 @@ bot.onText(/^(\/ajuda)\b/i, async (msg) => {
     '       `-c` - _Procura nas caracteristicas de classe._',
   ]);
 
+  console.log(msg.chat);
   if (msg.chat.type === 'group') {
     const [exist] = await tago.find({ variable: 'channel_id', value: msg.chat.id });
     if (!exist) tago.insert([{ variable: 'channel_id', value: msg.chat.id }, { variable: 'channel_name', value: msg.chat.title }]);
