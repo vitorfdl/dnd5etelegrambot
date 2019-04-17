@@ -1,6 +1,7 @@
 /* eslint-disable no-continue */
 /* eslint-disable guard-for-in */
-const data_info = require('./info.json');
+const data_info  = require('./info.json');
+const getObjects = require('./_getObjects');
 
 module.exports = (character, data_sheet) => {
   const ignored = [];
@@ -16,6 +17,10 @@ module.exports = (character, data_sheet) => {
 
   for (const modtype in data_sheet.modifiers) {
     for (const mod of data_sheet.modifiers[modtype]) {
+      if (mod.id.includes('armor') || mod.id.includes('weapon')) {
+        const [found] = getObjects(data_sheet.inventory, 'id', mod.componentId);
+        if (found && !found.equipped) continue;
+      }
       const subtype = mod.subType;
       if (mod.statId) {
         has_stat_bonuses.push({ subtype, type: mod.type, stat: mod.statId });
@@ -80,8 +85,9 @@ module.exports = (character, data_sheet) => {
     character.stats[`${val}Mod`] = Math.floor((Number(character.stats[val]) - 10) / 2);
   }
 
-  character.hit_points_per_level = character.stats.constitutionMod * character.levels.level;
-  character.hp = data_sheet.overrideHitPoints || data_sheet.baseHitPoints + character._getStat('hit-points-per-level', character.hit_points_per_level);
+  const level = character.levels.level;
+  character.hit_points_per_level = character.stats.constitutionMod * level;
+  character.hp = data_sheet.overrideHitPoints || data_sheet.baseHitPoints + (character._getStat('hit-points-per-level', character.stats.constitutionMod) * level);
 
 
   return character;

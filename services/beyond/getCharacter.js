@@ -54,7 +54,7 @@ async function GetDataSheet(url) {
   return character_sheet;
 }
 
-// GetDataSheet('7478665').then(e => console.log(e.armor));
+// GetDataSheet('6193599').then(e => console.log(e.hp, e.armor));
 
 module.exports = async function _(bot, msg, user_id, link = null) {
   console.log(link);
@@ -66,8 +66,6 @@ module.exports = async function _(bot, msg, user_id, link = null) {
       return;
     }
   }
-
-  console.log(link);
 
   const data = await GetDataSheet(link).catch((e) => {
     bot.sendMessage(msg.chat.id, e.message);

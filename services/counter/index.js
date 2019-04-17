@@ -20,7 +20,7 @@ module.exports = (bot, msg) => {
 
   switch (text[1].toLowerCase()) {
     case 'add':     add(bot, msg, text); break;
-    case 'list':    list(bot, msg, text); break;
+    case 'rem':    list(bot, msg, text); break;
     case 'rem':     rem(bot, msg, text); break;
     case 'reset':   reset(bot, msg, text); break;
     case 'rolar':   roll(bot, msg, text); break;
