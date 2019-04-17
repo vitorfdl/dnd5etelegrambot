@@ -32,7 +32,6 @@ module.exports = (character, data_sheet) => {
       }
     }
   }
-
   profs.animalHandling = profs['animal-handling'];
   profs.sleightOfHand = profs['sleight-of-hand'];
 
@@ -40,16 +39,16 @@ module.exports = (character, data_sheet) => {
     let relevantprof = profs[skill] || 0;
     let relevantbonus = bonuses[skill] || 0;
 
-    if ('ability-checks' in profs && !skill.includes('Save')) {
+    if (profs.hasOwnProperty('ability-checks') && !skill.includes('Save')) {
       relevantprof = Math.max(relevantprof, profs['ability-checks'] || 0);
     }
-    if ('saving-throws' in profs && skill.includes('Save')) {
+    if (profs.hasOwnProperty('saving-throws') && skill.includes('Save')) {
       relevantprof = Math.max(relevantprof, profs['saving-throws'] || 0);
     }
-    if ('ability-checks' in bonuses && !skill.includes('Save')) {
+    if (bonuses.hasOwnProperty('ability-checks') && !skill.includes('Save')) {
       relevantbonus += bonuses['ability-checks'] || 0;
     }
-    if ('saving-throws' in bonuses && skill.includes('Save')) {
+    if (bonuses.hasOwnProperty('saving-throws') && skill.includes('Save')) {
       relevantbonus += bonuses['saving-throws'] || 0;
     }
 
@@ -60,7 +59,7 @@ module.exports = (character, data_sheet) => {
 
   const ignored_ids = [];
   for (const charval of data_sheet.characterValues) {
-    if (String(charval.valueId) in data_info.houserule_skills && !ignored_ids.includes(charval.valueId)) {
+    if (data_info.houserule_skills.hasOwnProperty(String(charval.valueId))  && !ignored_ids.includes(charval.valueId)) {
       const skill_name = data_info.houserule_skills[charval.valueId];
       if (charval.typeId === 23) { // .. override
         skills[skill_name] = charval.value;

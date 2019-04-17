@@ -33,7 +33,7 @@ bot.onText(/^(\/r)\b/i, (msg) => {
       '/r `<dado> van [Desc]` - _Rolagem de dados com vantagem._',
       '/r `<dado> des [Desc]` - _Rolagem de dados com desvantagem._',
       '/r `<dado>-L` - _Remove o menor resultado._ ',
-      '/r `<dado>-H` - _Remove o menor maior._ ',
+      '/r `<dado>-H` - _Remove o maior resultado._ ',
       '/r `<dado>!` - _Explode o dado.._ ',
       '/r `4dF` - _Rolagem Fudge/Fate.._ ',
       '/r `4dF.1` - _Rolagem Fudge/Fate.._ ',

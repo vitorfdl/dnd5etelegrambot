@@ -17,12 +17,13 @@ module.exports = (character, data_sheet) => {
 
   for (const modtype in data_sheet.modifiers) {
     for (const mod of data_sheet.modifiers[modtype]) {
-      if (mod.id.includes('armor') || mod.id.includes('weapon') || mod.id.includes('gear')) {
-        const [found] = getObjects(data_sheet.inventory, 'id', mod.componentId);
-        if (found) {
-          if (!found.equipped) continue;
-          if (mod.requiresAttunement && !found.isAttuned) continue;
-        }
+      if (!mod.isGranted && (mod.id.includes('armor') || mod.id.includes('weapon') || mod.id.includes('gear'))) {
+        continue;
+        // const [found] = getObjects(data_sheet.inventory, 'id', mod.componentId);
+        // if (found) {
+        // if (!found.equipped) { console.log('1', mod.id, mod.subType, found); continue; }
+        // if (mod.requiresAttunement && !found.isAttuned) { console.log('2', mod.id, mod.subType); continue; }
+        // }
       } else if (mod.id.includes('classFeature') && mod.subType === 'hit-points-per-level') {
         const found = data_sheet.classes.find((x) => {
           return x.classFeatures.find(y => y.definition.id === mod.componentId);
@@ -41,6 +42,7 @@ module.exports = (character, data_sheet) => {
       } else if (mod.type === 'damage') {
         calculated_stats[`${subtype}-damage`] = (set_calculated_stats[`${subtype}-damage`] || 0) + (mod.value || 0);
       } else if (mod.type === 'set') {
+        // console.log(mod.id, mod.subType, mod.value);
         if (subtype in set_calculated_stats && calculated_stats[subtype] > (mod.value || 0)) continue;
         calculated_stats[subtype] = (mod.value || 0);
         set_calculated_stats.push(subtype);

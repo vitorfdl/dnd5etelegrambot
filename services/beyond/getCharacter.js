@@ -55,7 +55,7 @@ async function GetDataSheet(url) {
   return character_sheet;
 }
 
-// GetDataSheet('https://www.dndbeyond.com/characters/6855744').then(e => console.log(e.skills));
+// GetDataSheet('https://www.dndbeyond.com/characters/10472019').then(e => console.log(e.skills, e.hp, e.armor));
 
 module.exports = async function _(bot, msg, user_id, link = null) {
   if (!link) {
