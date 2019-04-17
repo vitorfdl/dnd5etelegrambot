@@ -58,7 +58,8 @@ bot.onText(/^(\/init)\b/i, (msg) => {
 
 
 bot.onText(/^(\/personagem)\b/i, (msg) => {
-  storeCharacter(bot, msg, msg[1]);
+  const text = msg.text.toLowerCase().split(' ');
+  storeCharacter(bot, msg, text[1]);
 });
 
 bot.onText(/^(\/ficha)\b/i, (msg) => {

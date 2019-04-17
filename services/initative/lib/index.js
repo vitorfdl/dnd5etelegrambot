@@ -3,7 +3,7 @@ const tago = new TagoDevice(process.env.TAGO);
 
 async function save(chat_id, name, param) {
   name = name.toLowerCase();
-  tago.remove({ variable: 'init_session', serie: chat_id, value: name, qty: 100 });
+  await tago.remove({ variable: 'init_session', serie: chat_id, value: name, qty: 100 });
   await tago.insert({ variable: 'init_session', serie: chat_id, value: name, metadata: param });
 
   return true;

@@ -2,10 +2,11 @@ const storage = require('./lib/storage');
 const getCharacter = require('./getCharacter');
 
 module.exports = async (bot, msg, link) => {
+  console.log(link);
   if (!link) {
-    return bot.sendStructedMessage(msg.chat.id, 'Sintaxe incorreta. Use `/personagem <link>`.');
+    return bot.sendStructedMessage(msg, 'Sintaxe incorreta. Use `/personagem <link>`.');
   } else if (!link.includes('https://www.dndbeyond.com/')) {
-    return bot.sendStructedMessage(msg.chat.id, 'Link inválido. Utilize uma rota do Beyond DnD 5e.\nUse `/personagem <link>`.');
+    return bot.sendStructedMessage(msg, 'Link inválido. Utilize uma rota do Beyond DnD 5e.\nUse `/personagem <link>`.');
   }
 
   const data = await getCharacter(bot, msg, msg.from.id, link);
@@ -13,6 +14,6 @@ module.exports = async (bot, msg, link) => {
 
   storage.save(msg.from.id, link);
 
-  const quote = `<a href="tg://user?id=${msg.from.id}">${msg.from.first_name}</a>`;
-  bot.sendStructedMessage(msg.chat.id, `O personagem ${data.name} foi associado a você ${quote}`);
+  const quote = `[${msg.from.first_name}](tg://user?id=${msg.from.id})`;
+  bot.sendStructedMessage(msg, `O personagem ${data.name} foi associado a você ${quote}`);
 };
