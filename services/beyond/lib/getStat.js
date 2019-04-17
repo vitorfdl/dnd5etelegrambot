@@ -20,7 +20,7 @@ module.exports = (character, data_sheet) => {
       if (mod.statId) {
         has_stat_bonuses.push({ subtype, type: mod.type, stat: mod.statId });
       }
-      
+
       if (mod.type === 'bonus') {
         if (mod.type in set_calculated_stats) continue;
         calculated_stats[subtype] = (calculated_stats[subtype] || 0) + (mod.value || 0);
@@ -81,7 +81,7 @@ module.exports = (character, data_sheet) => {
   }
 
   character.hit_points_per_level = character.stats.constitutionMod * character.levels.level;
-  character.hp = data_sheet.overrideHitPoints || data_sheet.baseHitPoints + character.hit_points_per_level;
+  character.hp = data_sheet.overrideHitPoints || data_sheet.baseHitPoints + character._getStat('hit-points-per-level', character.hit_points_per_level);
 
 
   return character;
