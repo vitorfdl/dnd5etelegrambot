@@ -35,7 +35,10 @@ bot.onText(/^(\/r)\b/i, (msg) => {
       '/r `<dado>-L` - _Remove o menor resultado._ ',
       '/r `<dado>-H` - _Remove o menor maior._ ',
       '/r `<dado>!` - _Explode o dado.._ ',
-      '/r `<dado>!` - _Explode o dado.._ ',
+      '/r `4dF` - _Rolagem Fudge/Fate.._ ',
+      '/r `4dF.1` - _Rolagem Fudge/Fate.._ ',
+      '/r `1d10>=4` - _Rolagem somando somente os dados >= que 4.._ ',
+      '/r `1d10<=4` - _Rolagem somando somente os dados <= que 4.._ ',
     ]);
   }
 
