@@ -8,9 +8,7 @@ const roller = new Roll.DiceRoller();
 module.exports = async (bot, msg, text = []) => {
   let [,, creature, mod] = text;
   text = text.join(' ');
-  console.log(text);
   const params = yargs.parse(text);
-  console.log(params);
 
   let hp = Number(params.h) || 0;
   let ca = Number(params.c) || 0;

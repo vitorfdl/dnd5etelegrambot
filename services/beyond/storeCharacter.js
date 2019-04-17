@@ -2,7 +2,6 @@ const storage = require('./lib/storage');
 const getCharacter = require('./getCharacter');
 
 module.exports = async (bot, msg, link) => {
-  console.log(link);
   if (!link) {
     return bot.sendStructedMessage(msg, 'Sintaxe incorreta. Use `/personagem <link>`.');
   } else if (!link.includes('https://www.dndbeyond.com/')) {

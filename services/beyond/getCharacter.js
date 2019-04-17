@@ -57,7 +57,6 @@ async function GetDataSheet(url) {
 // GetDataSheet('6193599').then(e => console.log(e.hp, e.armor));
 
 module.exports = async function _(bot, msg, user_id, link = null) {
-  console.log(link);
   if (!link) {
     link = await storage.load(user_id);
     

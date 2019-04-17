@@ -3,7 +3,6 @@ const Roll = require('rpg-dice-roller');
 const roller = new Roll.DiceRoller();
 
 module.exports = (bot, msg, params, datasheet) => {
-  console.log(msg);
   let dice_string = params[1];
 
   let extra = '';
