@@ -13,6 +13,7 @@ const save       = require('./services/roll/save');
 const ficha      = require('./services/beyond/ficha');
 const storeCharacter   = require('./services/beyond/storeCharacter');
 const spellLookUp      = require('./services/lookup/spells');
+const featLookUp      = require('./services/lookup/feats');
 
 bot.sendStructedMessage = (msg, text) =>  {
   bot.sendMessage(msg.chat.id,
@@ -72,6 +73,11 @@ bot.onText(/^(\/magia)\b/i, (msg) => {
   spellLookUp(bot, msg);
 });
 
+
+bot.onText(/^(\/carac)\b/i, (msg) => {
+  featLookUp(bot, msg);
+});
+
 bot.onText(/^(\/ajuda)\b/i, async (msg) => {
   bot.sendStructedMessage(msg, [
     '[Comando] - [Descrição]',
@@ -83,6 +89,7 @@ bot.onText(/^(\/ajuda)\b/i, async (msg) => {
     '/personagem `<link>` -  _Associa ficha Beyond a você._',
     '/ficha - _Exibe informações sobre sua ficha_.',
     '/magia `<magia>` - _Exibe informações sobre uma magia (ingles)_.',
+    '/carac `<carac>` - _Exibe informações sobre uma caracteristica (ing)_.',
   ]);
 
   if (!msg.chat.type === 'Group') {
