@@ -23,6 +23,7 @@
     "node-telegram-bot-api": "^0.30.0",
     "roll": "^1.2.0",
     "rpg-dice-roller": "^3.0.1",
+    "string-similarity": "^3.0.0",
     "table": "^5.2.3",
     "tago": "^6.6.0",
     "yargs": "^13.2.2"
