@@ -8,7 +8,7 @@ module.exports = async (bot, msg) => {
   const data = await getCharacter(bot, msg, msg.from.id);
   if (!data) return;
 
-  const attr = ['strength', 'charisma', 'intelligence', 'dexterity', 'constitution', 'initiative'];
+  const attr = ['strength', 'charisma', 'intelligence', 'dexterity', 'constitution', 'wisdom', 'initiative'];
   const skills = Object.keys(data_info.translate_map).filter(x => !x.includes('Save') && !attr.includes(x)).reduce((final, x) => {
     const name_skill = data_info.translate_map[x].replace(/^\w/, (chr) => {
       return chr.toUpperCase();
