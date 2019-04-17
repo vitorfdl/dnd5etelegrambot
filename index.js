@@ -24,7 +24,7 @@ bot.sendStructedMessage = (msg, text) =>  {
 
 bot.onText(/^(\/r)\b/i, (msg) => {
   const text = msg.text.split(' ');
-  if (['van', 'des'].includes(text[2].toLowerCase)) test[2] = text[2].toLowerCase();
+  if (['van', 'des'].includes(text[2].toLowerCase())) test[2] = text[2].toLowerCase();
   
   if (text[1] === 'ajuda') {
     return bot.sendStructedMessage(msg, [
