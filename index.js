@@ -83,7 +83,7 @@ bot.onText(/^(\/ajuda)\b/i, async (msg) => {
     '*Rolagens*',
     '/r `ajuda` - _Instruções sobre comandos de rolagem._',
     '/rrr `<N> <dado> <CA>` -  _Multiplas rolagens de dados contra CA._',
-    '/check `<ajuda> <van/des>` - _Faz um teste de perícia_.',
+    '/check `<atributo> <van/des>` - _Faz um teste de perícia/atributo._.',
     '/save `<atributo> <van/des>` - _Faz um teste de resistência_.',
     '',
     '*Jogo*',
