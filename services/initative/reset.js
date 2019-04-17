@@ -1,16 +1,27 @@
+const yargs = require('yargs');
 const initLoader = require('./lib/index');
 
 module.exports = async (bot, msg, text) => {
-  if (!text[2]) return;
-
-  const my_list = await initLoader.load(msg.chat.id, text[2]);
-  if (!my_list) return bot.sendMessage(msg.chat.id, `Sessão de Iniciativa ${text[2]} não encontrado.`);
+  const my_list = await initLoader.getSession(msg.chat.id);
+  if (!my_list) return bot.sendStructedMessage(msg, 'Você deve setar uma sessão como ativa. Use `/init setar <sessao>`.');
 
   if (!my_list.creatures[0]) {
-    return bot.sendMessage(msg.chat.id, `Ordem de Iniciativa [${text[2]}]:\n<Vazio>`);
+    return bot.sendMessage(msg.chat.id, `Ordem de Iniciativa [${my_list.name}]:\n<Vazio>`);
   }
-  my_list.creatures = my_list.creatures.map(x => ({ ...x, temp_ca: 0, hp: x.max_hp }));
-  bot.sendMessage(msg.chat.id, `HP e CA resetados na sessão [${text[2]}]`);
+
+  const params = yargs.parse(text.join(' '));
+
+  my_list.creatures = my_list.creatures.map((x) => {
+    const changes = {};
+    if (!params.h) changes.hp = x.mas_hp;
+    if (!params.c) changes.temp_ca = 0;
+
+    return { ...x, temp_ca: 0, hp: x.max_hp };
+  });
+
+  if (!params.t) my_list.turn = 0;
+
+  bot.sendMessage(msg.chat.id, `Sessão resetada: [${my_list.name}]`);
 
   initLoader.save(msg.chat.id, text[2], my_list);
 };

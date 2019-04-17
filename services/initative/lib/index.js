@@ -1,59 +1,53 @@
-const fs = require('fs');
-const mkdirp = require('mkdirp');
+const TagoDevice = require('tago/device');
+const tago = new TagoDevice(process.env.TAGO);
 
-function _fixPath(path) {
-  return path < 0 ? path * -1 : path;
-}
+async function save(chat_id, name, param) {
+  name = name.toLowerCase();
+  tago.remove({ variable: 'init_session', serie: chat_id, value: name, qty: 100 });
+  await tago.insert({ variable: 'init_session', serie: chat_id, value: name, metadata: param });
 
-async function save(path, name, param) {
-  path = _fixPath(path);
-  param = JSON.stringify(param);
-  fs.writeFile(`./data/${path}/${name}.json`, param, console.log);
   return true;
 }
 
-async function load(path, name) {
-  path = _fixPath(path);
+async function load(chat_id, name) {
+  const [data] = await tago.find({ variable: 'init_session', serie: chat_id, value: name, qty: 1 });
+  if (!data) return;
 
-  let rawdata;
-  try {
-    rawdata = fs.readFileSync(`./data/${path}/${name}.json`);
-  } catch (e) {
-    return {};
-  }
-
-  return JSON.parse(rawdata);
+  return data.metadata;
 }
 
-async function namelist(path) {
-  path = _fixPath(path);
-  let files;
-  try {
-    files = await fs.readdirSync(`./data/${path}/`);
-  } catch (e) {
-    return;
-  }
-  return files.map((x, i) => `${i + 1} - ${x}`.replace('.json', '')).join('\n');
+async function namelist(chat_id) {
+  const data = await tago.find({ variable: 'init_session', serie: chat_id, qty: 200 });
+  if (!data.length) return;
+
+  return data.map(x => x.metadata.name);
 }
 
-async function newDoc(path, name) {
-  path = _fixPath(path);
-  if (!fs.existsSync(`./data/${path}/`)) {
-    await mkdirp.sync(`./data/${path}/`);
-  }
+async function newDoc(chat_id, name) {
+  const [data] = await tago.find({ variable: 'init_session', serie: chat_id, value: name, qty: 1 });
+  if (data) return false;
 
-  await save(path, name, { name, creatures: [] });
+  await save(chat_id, name, { name, creatures: [], turn: 0 });
   return true;
 }
 
-async function remove(path, name) {
-  path = _fixPath(path);
-  if (!fs.existsSync(`./data/${path}/${name}.json`)) {
-    return null;
-  }
-
-  fs.unlink(`./data/${path}/${name}.json`, console.log);
+async function remove(chat_id, name) {
+  tago.remove({ variable: 'init_session', serie: chat_id, value: name, qty: 100 });
   return true;
 }
 
-module.exports = { newDoc, save, load, namelist, remove };
+async function getSession(chat_id) {
+  const [cur_session] = await tago.remove({ variable: 'current_session', serie: chat_id, qty: 1 });
+  if (!cur_session) throw 'Não foi setado uma sessão.';
+
+  return load(chat_id, cur_session.value);
+}
+async function changeSession(chat_id, name) {
+  await tago.remove({ variable: 'current_session', serie: chat_id, qty: 100 });
+  await tago.insert({ variable: 'current_session', serie: chat_id, value: name });
+
+  return true;
+}
+
+
+module.exports = { newDoc, save, load, namelist, remove, getSession, changeSession };

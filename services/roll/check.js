@@ -12,7 +12,7 @@ module.exports = async (bot, msg, params) => {
     return bot.sendMessage(msg.chat.id, `A perícia/atributo ${params[1]} não existe no nosso sistema.`);
   }
 
-  if (type && !['adv', 'dis'].includes(type.toLowerCase())) type = null;
+  if (type && !['van', 'des'].includes(type.toLowerCase())) type = null;
 
   const data = await getCharacter(bot, msg, msg.from.id);
   if (!data) return;

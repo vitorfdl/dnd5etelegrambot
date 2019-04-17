@@ -3,7 +3,7 @@ const getStat      = require('./lib/getStat');
 const getLevels    = require('./lib/getLevels');
 const getEquipment = require('./lib/getEquipment');
 const getSkills    = require('./lib/getSkills');
-const storage      = require('./storage');
+const storage      = require('./lib/storage');
 
 async function getBeyondJSON(character_id) {
   const result = await axios.get(`https://www.dndbeyond.com/character/${character_id}/json`);
@@ -57,15 +57,17 @@ async function GetDataSheet(url) {
 // GetDataSheet('7478665').then(e => console.log(e.armor));
 
 module.exports = async function _(bot, msg, user_id, link = null) {
+  console.log(link);
   if (!link) {
-    const player_list = await storage.load();
-  
-    link = player_list[user_id];
+    link = await storage.load(user_id);
+    
     if (!link) {
-      bot.sendMessage(msg.chat.id, 'Não existe uma ficha associada ao seu usuário. Use /personagem associar <beyond_link>');
+      bot.sendMessage(msg.chat.id, 'Não existe uma ficha associada ao seu usuário.\nUse /personagem associar <beyond_link>');
       return;
     }
   }
+
+  console.log(link);
 
   const data = await GetDataSheet(link).catch((e) => {
     bot.sendMessage(msg.chat.id, e.message);

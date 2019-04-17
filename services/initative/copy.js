@@ -2,7 +2,7 @@ const initLoader = require('./lib/index');
 
 module.exports = async (bot, msg, text) => {
   const [,, sessao, new_sessao] = text;
-  if (!sessao) return bot.sendStructedMessage(msg.chat.id, 'Parametro invalido, Use: `/init novo <sessão>`');
+  if (!sessao) return bot.sendStructedMessage(msg, 'Parametro invalido, Use: `/init novo <sessão>`');
 
 
   const my_list = await initLoader.load(msg.chat.id, sessao);
@@ -10,11 +10,13 @@ module.exports = async (bot, msg, text) => {
 
   const exists = await initLoader.load(msg.chat.id, new_sessao);
   if (!exists) {
-    await initLoader.newDoc(msg.chat.id, new_sessao);
+    if (!await initLoader.newDoc(msg.chat.id, new_sessao)) {
+      return bot.sendStructedMessage(msg, `Nome de sessão \`${new_sessao}\` já está em uso.`);
+    }
   }
 
   initLoader.save(msg.chat.id, new_sessao, my_list);
 
-  bot.sendMessage(msg.chat.id, `Sessão ${sessao} copiada para ${new_sessao}`);
+  bot.sendMessage(msg.chat.id, `Sessão ${sessao} copiada para ${new_sessao}.`);
 }
 ;

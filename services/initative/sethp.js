@@ -1,23 +1,20 @@
 const initLoader = require('./lib/index');
 
-const Roll = require('rpg-dice-roller');
-const roller = new Roll.DiceRoller();
+module.exports = async (bot, msg, [,,nome,hp]) => {
+  // /init add name creature mod hp
+  if (!hp || !nome) return bot.sendMessage(msg.chat.id, 'Erro de sintaxe. Use: /init setca <nome> <+/-HP>');
+  else if (Number.isNaN(hp)) return bot.sendMessage(msg.chat.id, 'O CA a ser modificado precisa ser um número!');
+  hp = Number(hp);
 
-module.exports = async (bot, msg, text) => {
-  // /init add name creature mod hp CA
-  if (!text[2] || !text[3] || !text[4]) return bot.sendStructedMessage(msg.chat.id, 'Erro de sintaxe. Use: `/init sethp <sessão> <nome> <+/-hp>`');
-  else if (isNaN(Number(text[4]))) return bot.sendStructedMessage(msg.chat.id, 'O `HP` a ser modificado precisa ser um número!');
-  text[4] = Number(text[4]);
+  const my_list = await initLoader.load(msg.chat.id);
+  if (!my_list) return bot.sendStructedMessage(msg, 'Você deve setar uma sessão como ativa. Use `/init setar <sessao>`.');
 
-  const my_list = await initLoader.load(msg.chat.id, text[2]);
-  if (!my_list) return bot.sendMessage(msg.chat.id, `Sessão de Iniciativa ${text[2]} não encontrado.`);
+  const monster = my_list.creatures.find(x => x.name.toLowerCase() === nome.toLowerCase());
+  if (!monster) return bot.sendMessage(msg.chat.id, `Criatura ${nome} não encontrado na sessão ${my_list.name}.`);
 
-  const monster = my_list.creatures.find(x => x.name.toLowerCase() === text[3].toLowerCase());
-  if (!monster) return bot.sendMessage(msg.chat.id, `Criatura ${text[3]} não encontrado na sessão ${text[2]}.`);
+  monster.temp_ca += hp;
 
-  monster.hp += text[4];
-
-  initLoader.save(msg.chat.id, text[2], my_list);
-  bot.sendMessage(msg.chat.id, `HP de ${text[3]} agora é ${monster.hp} (${text[4] >= 0 ? `+${text[4]}` : text[4]}).`);
+  initLoader.save(msg.chat.id, my_list.name, my_list);
+  bot.sendMessage(msg.chat.id, `HP de ${nome} agora é ${monster.hp} (${hp >= 0 ? `+${hp}` : hp}).`);
 };
 

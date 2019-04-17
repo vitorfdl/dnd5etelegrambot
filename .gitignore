@@ -3,3 +3,4 @@ data
 test.js
 package-lock.json
 ./test.js
+.env

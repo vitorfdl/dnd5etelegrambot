@@ -9,12 +9,12 @@ module.exports = (bot, msg, params, datasheet) => {
   let extra = '';
   let opt = '';
 
-  if (params[2] === 'adv') {
+  if (params[2] === 'van') {
     dice_string = dice_string.replace(/1d/g, '2d');
     dice_string += '-L';
 
     opt = '\nRolado com Vantagem';
-  } else if (params[2] === 'dis') {
+  } else if (params[2] === 'des') {
     dice_string = dice_string.replace(/1d/g, '2d');
     dice_string += '-H';
 
@@ -28,7 +28,7 @@ module.exports = (bot, msg, params, datasheet) => {
   const dice = `${res.notation}`;
   let quote = `<a href="tg://user?id=${msg.from.id}">${msg.from.first_name}</a>${extra}`;
   if (datasheet) {
-    quote = `<a href="tg://user?id=${msg.from.id}">${msg.from.first_name}</a> - ${datasheet.name} realiza um teste ${extra}`;
+    quote = `<a href="tg://user?id=${msg.from.id}">${msg.from.first_name}</a> - ${datasheet.name.split(' ')[0]} realiza um teste ${extra}`;
   }
 
   bot.deleteMessage(msg.chat.id, msg.message_id).catch(() => null);

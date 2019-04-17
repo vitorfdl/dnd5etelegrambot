@@ -25,7 +25,7 @@ module.exports = async (bot, msg) => {
     [`\`HP: ${data.hp}\``, `\`CA: ${data.armor}\``],
     [`\`Level: ${data.levels.level}\``, ''],
     [`\`Iniciativa: ${data.skills.initiative}\``, ''],
-    ['Stats', '         Saves'],
+    ['Stats', '       Salvaguarda'],
     [`\`For: ${data.stats.strength} (${data.stats.strengthMod})\``, `\`For: ${data.skills.strengthSave}\``],
     [`\`Des: ${data.stats.dexterity} (${data.stats.dexterityMod})\``, `\`Des: ${data.skills.dexteritySave}\``],
     [`\`Con: ${data.stats.constitution} (${data.stats.constitutionMod})\``, `\`Con: ${data.skills.constitutionSave}\``],
