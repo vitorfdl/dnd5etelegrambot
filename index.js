@@ -27,6 +27,7 @@ bot.onText(/^(\/r)\b/i, (msg) => {
   if (text[1] === 'ajuda') {
     return bot.sendStructedMessage(msg, [
       '[Comando] - [Descrição]',
+      '/r `<dado> [Desc]` - _Rolagem de dados._',
       '/r `<dado> van [Desc]` - _Rolagem de dados com vantagem._',
       '/r `<dado> des [Desc]` - _Rolagem de dados com desvantagem._',
       '/r `<dado>-L` - _Remove o menor resultado._ ',
