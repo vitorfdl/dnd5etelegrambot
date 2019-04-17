@@ -17,10 +17,19 @@ module.exports = (character, data_sheet) => {
 
   for (const modtype in data_sheet.modifiers) {
     for (const mod of data_sheet.modifiers[modtype]) {
-      if (mod.id.includes('armor') || mod.id.includes('weapon')) {
+      if (mod.id.includes('armor') || mod.id.includes('weapon') || mod.id.includes('gear')) {
         const [found] = getObjects(data_sheet.inventory, 'id', mod.componentId);
-        if (found && !found.equipped) continue;
+        if (found) {
+          if (!found.equipped) continue;
+          if (mod.requiresAttunement && !found.isAttuned) continue;
+        }
+      } else if (mod.id.includes('classFeature') && mod.subType === 'hit-points-per-level') {
+        const found = data_sheet.classes.find((x) => {
+          return x.classFeatures.find(y => y.definition.id === mod.componentId);
+        });
+        mod.subType += `-${found.definition.name}`;
       }
+
       const subtype = mod.subType;
       if (mod.statId) {
         has_stat_bonuses.push({ subtype, type: mod.type, stat: mod.statId });
@@ -87,7 +96,13 @@ module.exports = (character, data_sheet) => {
 
   const level = character.levels.level;
   character.hit_points_per_level = character.stats.constitutionMod * level;
-  character.hp = data_sheet.overrideHitPoints || data_sheet.baseHitPoints + (character._getStat('hit-points-per-level', character.stats.constitutionMod) * level);
+  character.hp = data_sheet.overrideHitPoints;
+  if (!character.hp) {
+    character.hp = data_sheet.baseHitPoints + (character._getStat('hit-points-per-level', character.stats.constitutionMod) * level);
+    character.hp += Object.keys(character.levels).reduce((f, i) => {
+      return f + (character._getStat(`hit-points-per-level-${i}`) * character.levels[i]);
+    }, 0);
+  }
 
 
   return character;
