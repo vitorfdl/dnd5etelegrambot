@@ -80,16 +80,21 @@ bot.onText(/^(\/carac)\b/i, (msg) => {
 
 bot.onText(/^(\/ajuda)\b/i, async (msg) => {
   bot.sendStructedMessage(msg, [
-    '[Comando] - [Descrição]',
-    '/init `ajuda` -  _Instruções sobre comandos de iniciativa._',
+    '*Rolagens*',
     '/r `ajuda` - _Instruções sobre comandos de rolagem._',
     '/rrr `<N> <dado> <CA>` -  _Multiplas rolagens de dados contra CA._',
     '/check `<ajuda> <van/des>` - _Faz um teste de perícia_.',
     '/save `<atributo> <van/des>` - _Faz um teste de resistência_.',
+    '',
+    '*Jogo*',
+    '/init `ajuda` -  _Instruções sobre comandos de iniciativa._',
     '/personagem `<link>` -  _Associa ficha Beyond a você._',
     '/ficha - _Exibe informações sobre sua ficha_.',
+    '',
+    '*Pesquisa*',
     '/magia `<magia>` - _Exibe informações sobre uma magia (ingles)_.',
     '/carac `<carac>` - _Exibe informações sobre uma caracteristica (ing)_.',
+    '       `-c` - _Procura nas caracteristicas de classe._',
   ]);
 
   if (msg.chat.type === 'group') {
