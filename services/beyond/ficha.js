@@ -9,7 +9,7 @@ async function getUserIdReference(msg) {
   const [, mention] = msg.text.split(' ');
 
   if (mention) {
-    user_id = await storage.getUser(mention.replace('@', '')) || msg.from.id;
+    user_id = await storage.getUser(msg.chat.id, mention.replace('@', '')) || msg.from.id;
   }
   return user_id;
 }

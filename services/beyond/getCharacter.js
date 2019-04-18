@@ -60,10 +60,10 @@ async function GetDataSheet(url) {
 
 module.exports = async function _(bot, msg, user_id, link = null) {
   if (!link) {
-    link = await storage.load(user_id, msg.from.first_name);
+    link = await storage.load(msg.chat.id, user_id, msg.from.first_name);
 
     if (!link) {
-      bot.sendMessage(msg.chat.id, 'Não existe uma ficha associada ao seu usuário.\nUse /personagem associar <beyond_link>');
+      bot.sendMessage(msg.chat.id, 'Não existe uma ficha associada ao seu usuário neste grupo.\nUse \`/personagem associar <beyond_link>\`');
       return;
     }
   }
