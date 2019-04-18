@@ -6,18 +6,20 @@ const storage      = require('./lib/storage');
 
 async function getUserIdReference(msg) {
   let user_id = msg.from.id;
-  let user_name = msg.from.first_name;
-  const [, mention] = msg.text.split(' ');
+  let [, user_name] = msg.text.split(' ') || msg.from.first_name;
 
-  if (mention) {
-    user_id = await storage.getUser(msg.chat.id, mention.replace('@', '')) || msg.from.id;
-    if (user_id !== msg.from.id) user_name = mention.replace('@', '');
+  if (user_name) {
+    user_name = user_name.replace('@', '');
+    user_id = await storage.getUser(msg.chat.id, user_name);
   }
   return { user_id, user_name };
 }
 
 module.exports = async (bot, msg) => {
   const { user_id, user_name } = await getUserIdReference(msg);
+  if (!user_id || !user_name) {
+    return bot.sendStructedMessage(msg, `Não foi encontrado nenhuma ficha para \`${user_name}\``);
+  }
   const data = await getCharacter(bot, msg, user_id, null, user_name);
   if (!data) return;
 
