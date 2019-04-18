@@ -63,7 +63,7 @@ module.exports = async function _(bot, msg, user_id, link = null) {
     link = await storage.load(msg.chat.id, user_id, msg.from.first_name);
 
     if (!link) {
-      bot.sendMessage(msg.chat.id, 'Não existe uma ficha associada ao seu usuário neste grupo.\nUse \`/personagem associar <beyond_link>\`');
+      bot.sendMessage(msg.chat.id, 'Não existe uma ficha associada ao seu usuário neste grupo.\nUse \`/personagem <beyond_link>\`');
       return;
     }
   }

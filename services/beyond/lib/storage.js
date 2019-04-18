@@ -4,7 +4,7 @@ const tago = new TagoDevice(process.env.TAGO);
 async function save(chat, id, url, name) {
   const serie = `${chat}_${id}`;
   await tago.remove({ variables: ['user_url', 'user_name'], serie, qty: 100 });
-  await tago.insert([{ variable: 'user_url', serie, value: url }, { variable: 'user_name', serie: id, value: name }]);
+  await tago.insert([{ variable: 'user_url', serie, value: url }, { variable: 'user_name', serie, value: name }]);
   return true;
 }
 
@@ -31,7 +31,7 @@ async function remove(chat, id) {
 async function getUser(chat, name) {
   const users = await tago.find({ variable: 'user_name', value: name, qty: 100 });
   const user_id = users.find(x => x.serie.includes(String(chat)));
-  return user_id ? user_id.serie : null;
+  return user_id ? user_id.serie.replace(`${chat}_`, '') : null;
 }
 
 
