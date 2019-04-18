@@ -6,7 +6,7 @@ const storage      = require('./lib/storage');
 
 async function getUserIdReference(msg) {
   let user_id = msg.from.id;
-  let [, user_name] = msg.text.split(' ') || msg.from.first_name;
+  let user_name = msg.text.split(' ').slice(1).join(' ') || msg.from.first_name;
 
   if (user_name) {
     user_name = user_name.replace('@', '');
