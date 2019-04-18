@@ -58,12 +58,16 @@ async function GetDataSheet(url) {
 
 // GetDataSheet('https://www.dndbeyond.com/profile/Amaraljota/characters/1419917').then(e => console.log(e.hp, e.armor));
 
-module.exports = async function _(bot, msg, user_id, link = null) {
+module.exports = async function _(bot, msg, user_id, link = null, name = null) {
   if (!link) {
-    link = await storage.load(msg.chat.id, user_id, msg.from.first_name);
+    link = await storage.load(msg.chat.id, user_id, name || msg.from.first_name);
 
     if (!link) {
-      bot.sendMessage(msg.chat.id, 'Não existe uma ficha associada ao seu usuário neste grupo.\nUse \`/personagem <beyond_link>\`');
+      if (msg.from.id !== user_id) {
+        bot.sendMessage(msg.chat.id, 'Não existe nenhuma ficha associada a este usuário.');
+      } else {
+        bot.sendMessage(msg.chat.id, 'Não existe uma ficha associada ao seu usuário neste grupo.\nUse \`/personagem <beyond_link>\`');
+      }
       return;
     }
   }

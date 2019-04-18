@@ -6,17 +6,19 @@ const storage      = require('./lib/storage');
 
 async function getUserIdReference(msg) {
   let user_id = msg.from.id;
+  let user_name = msg.from.first_name;
   const [, mention] = msg.text.split(' ');
 
   if (mention) {
     user_id = await storage.getUser(msg.chat.id, mention.replace('@', '')) || msg.from.id;
+    if (user_id !== msg.from.id) user_name = mention.replace('@', '');
   }
-  return user_id;
+  return { user_id, user_name };
 }
 
 module.exports = async (bot, msg) => {
-  const user_id = await getUserIdReference(msg);
-  const data = await getCharacter(bot, msg, user_id);
+  const { user_id, user_name } = await getUserIdReference(msg);
+  const data = await getCharacter(bot, msg, user_id, null, user_name);
   if (!data) return;
 
   const attr = ['strength', 'charisma', 'intelligence', 'dexterity', 'constitution', 'wisdom', 'initiative'];
