@@ -1,7 +1,7 @@
 /* eslint-disable no-continue */
 /* eslint-disable guard-for-in */
 const data_info  = require('./info.json');
-const getObjects = require('./_getObjects');
+// const getObjects = require('./_getObjects');
 
 module.exports = (character, data_sheet) => {
   const ignored = [];
@@ -33,7 +33,7 @@ module.exports = (character, data_sheet) => {
 
       const subtype = mod.subType;
       if (mod.statId) {
-        has_stat_bonuses.push({ subtype, type: mod.type, stat: mod.statId });
+        has_stat_bonuses.push({ subType: mod.subType, type: mod.type, stat: mod.statId });
       }
 
       if (mod.type === 'bonus') {
@@ -43,7 +43,7 @@ module.exports = (character, data_sheet) => {
         calculated_stats[`${subtype}-damage`] = (set_calculated_stats[`${subtype}-damage`] || 0) + (mod.value || 0);
       } else if (mod.type === 'set') {
         // console.log(mod.id, mod.subType, mod.value);
-        if (subtype in set_calculated_stats && calculated_stats[subtype] > (mod.value || 0)) continue;
+        if (subtype in set_calculated_stats && calculated_stats[subtype] > (value || 0)) continue;
         calculated_stats[subtype] = (mod.value || 0);
         set_calculated_stats.push(subtype);
       } else if (mod.type === 'ignore') {
@@ -60,20 +60,6 @@ module.exports = (character, data_sheet) => {
         }
         character.prof.push(mod.friendlySubtypeName);
       }
-    }
-  }
-
-  for (const mod in has_stat_bonuses) {
-    const subtype = mod.subType;
-    if (ignored.includes(subtype)) continue;
-    const stat_mod = character.stat_from_id(mod.stat);
-
-    if (mod.type === 'bonus') {
-      calculated_stats[subtype] = (calculated_stats[subtype] || 0) + stat_mod;
-    } else if (mod.type === 'damage') {
-      calculated_stats[`${subtype}-damage`] = (calculated_stats[`${subtype}-damage`] || 0) + stat_mod;
-    } else if (mod.type === 'set') {
-      calculated_stats[subtype] = stat_mod;
     }
   }
 
@@ -94,6 +80,20 @@ module.exports = (character, data_sheet) => {
     const override = data_sheet.overrideStats.find(x => x.id === i + 1).value;
     character.stats[val] = override || character._getStat(`${val}-score`, base + bonus);
     character.stats[`${val}Mod`] = Math.floor((Number(character.stats[val]) - 10) / 2);
+  }
+
+  for (const mod of has_stat_bonuses) {
+    const subtype = mod.subType;
+    if (ignored.includes(subtype)) continue;
+    const stat_mod = character.stat_from_id(mod.stat);
+
+    if (mod.type === 'bonus') {
+      character.calculated_stats[subtype] = (character.calculated_stats[subtype] || 0) + stat_mod;
+    } else if (mod.type === 'damage') {
+      character.calculated_stats[`${subtype}-damage`] = (character.calculated_stats[`${subtype}-damage`] || 0) + stat_mod;
+    } else if (mod.type === 'set') {
+      character.calculated_stats[subtype] = stat_mod;
+    }
   }
 
   const level = character.levels.level;
