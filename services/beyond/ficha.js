@@ -1,11 +1,22 @@
 
-const Roll = require('rpg-dice-roller');
 const getCharacter = require('../beyond/getCharacter');
-const table = require('table');
-const data_info = require('./lib/info.json');
+const table        = require('table');
+const data_info    = require('./lib/info.json');
+const storage      = require('./lib/storage');
+
+async function getUserIdReference(msg) {
+  let user_id = msg.from.id;
+  const [, mention] = msg.text.split(' ');
+
+  if (mention) {
+    user_id = await storage.getUser(mention.replace('@', '')) || msg.from.id;
+  }
+  return user_id;
+}
 
 module.exports = async (bot, msg) => {
-  const data = await getCharacter(bot, msg, msg.from.id);
+  const user_id = await getUserIdReference(msg);
+  const data = await getCharacter(bot, msg, user_id);
   if (!data) return;
 
   const attr = ['strength', 'charisma', 'intelligence', 'dexterity', 'constitution', 'wisdom', 'initiative'];
@@ -44,7 +55,8 @@ module.exports = async (bot, msg) => {
         alignment: 'left',
         minWidth: 10,
       },
-    } });
-
+    },
+  });
+  // output = output.replace(`Ficha de ${data.name}`, `[Ficha de ${data.name}](${data.avatar})`);
   bot.sendStructedMessage(msg, output);
 };

@@ -28,6 +28,7 @@ async function GetDataSheet(url) {
 
   let character_sheet = {
     name: data_sheet.name,
+    avatar: data_sheet.avatarUrl,
     stats: {
       strength: 10,
       dexterity: 10,
@@ -59,7 +60,7 @@ async function GetDataSheet(url) {
 
 module.exports = async function _(bot, msg, user_id, link = null) {
   if (!link) {
-    link = await storage.load(user_id);
+    link = await storage.load(user_id, msg.from.first_name);
 
     if (!link) {
       bot.sendMessage(msg.chat.id, 'Não existe uma ficha associada ao seu usuário.\nUse /personagem associar <beyond_link>');

@@ -11,7 +11,7 @@ module.exports = async (bot, msg, link) => {
   const data = await getCharacter(bot, msg, msg.from.id, link);
   if (!data) return;
 
-  storage.save(msg.from.id, link);
+  storage.save(msg.from.id, link, msg.from.first_name);
 
   const quote = `[${msg.from.first_name}](tg://user?id=${msg.from.id})`;
   bot.sendStructedMessage(msg, `O personagem ${data.name} foi associado a você ${quote}`);
