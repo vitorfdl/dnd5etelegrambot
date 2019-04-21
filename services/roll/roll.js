@@ -19,6 +19,7 @@ module.exports = (bot, msg, params, datasheet) => {
 
     opt = '\nRolado com Desvantagem';
   }
+  console.log(dice_string);
 
   if (params[opt ? 3 : 2]) {
     extra = ` <b>(${params.slice(opt ? 3 : 2).join(' ')})</b>`;

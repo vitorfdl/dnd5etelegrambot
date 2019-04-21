@@ -1,16 +1,8 @@
 /* eslint-disable no-case-declarations */
 const add     = require('./add');
 const rem     = require('./rem');
-const list    = require('./list');
+const show    = require('./show');
 const reset   = require('./reset');
-const newS    = require('./new');
-const roll    = require('./roll');
-const destroy = require('./destroy');
-const copy    = require('./copy');
-const sethp   = require('./sethp');
-const setca   = require('./setca');
-const setar   = require('./set');
-const turn   = require('./turn');
 
 module.exports = (bot, msg) => {
   const text = msg.text.split(' ');
@@ -20,50 +12,29 @@ module.exports = (bot, msg) => {
 
   switch (text[1].toLowerCase()) {
     case 'add':     add(bot, msg, text); break;
-    case 'rem':    list(bot, msg, text); break;
-    case 'rem':     rem(bot, msg, text); break;
-    case 'reset':   reset(bot, msg, text); break;
-    case 'rolar':   roll(bot, msg, text); break;
-    case 'criar':    newS(bot, msg, text); break;
-    case 'deletar': destroy(bot, msg, text); break;
-    case 'copiar':    copy(bot, msg, text); break;
-    case 'hp':      sethp(bot, msg, text); break;
-    case 'ca':      setca(bot, msg, text); break;
-    case 'set':      setar(bot, msg, text); break;
-    case 'turno':   turn(bot, msg, text); break;
+    case 'rem':    rem(bot, msg, text); break;
+    case 'ver':     show(bot, msg, text); break;
+    case 'reset':     reset(bot, msg, text); break;
+    
     case 'ajuda':
       const help_text = [
-        '*Criação de Sessões*',
-        '/init `list` - _Lista todas as sessões._',
-        '/init `criar <sessão>` - _Inicia uma sessão com nome <sessão>_',
-        '/init `deletar <sessão>` - _Deleta completamente a sessão._',
-        '/init `set <sessão>` - _Seta sessão como ativa na sala._',
-        '/init `copiar <sessão> <novasessão>` - _Copia sessão para nova._',
+        '*Contadores Customizados*',
+        '/cc - _Lista seus contadores._',
+        '/cc `add <nome> <valor>` - _Lista todas as sessões._',
+        '       `-m <valor>` - _Seta valor máximo_',
+        '       `-i` - Inclui o contador nesta sessão de iniciativa._',
+        '       `-a` - _Incrementa o valor por turno._',
+        '/cc `rem` - _Remove todos seus contadores._',
+        '/cc `rem <nome>` - Remove o contador especificado._',
+        '/cc `ver <usuario>` - _Lista contadores do usuario._',
+        '/cc `reset` - _Reseta todos seus contadores._',
+        '/cc `reset <nome>` - _Reseta o contador especifico seu.._',
         '',
-        '*Sessão Ativa*',
-        '/init - _Lista ordem de iniciativa da sessão._',
-        '/init `add` - _Adiciona/Atualiza seu personagem do beyond na sessão._',
-        '/init `add <nome> <mod>` - _Adiciona PJ/criatura._',
-        '       `-h <hp>` - _Seta HP da criatura_',
-        '       `-c <ca>` - _Seta CA da criatura_',
-        '       `-d <N>` - _Duplica a criatura N vezes_',
-        '/init `rem <nomes...>` - _Remove criatura da sessão._',
-        '/init `hp <nome> <+/-hp>` - _Aumenta ou reduz HP do alvo._',
-        '/init `ca <nome> <CA>` - _Altera CA do alvo._',
-        '/init `rolar` - _Rola novamente os dados de iniciativa._',
-        '      `-v <nomes..>` - _Citados rolam em vantagem._',
-        '      `-d <nomes..>` - _Citados rolam em desvantagem._',
-        '/init `reset` - _Reinicia pontos de HP._',
-        '       `-h` - _Não reseta HP._',
-        '       `-c` - _Não reseta CA._',
-        '       `-t` - _Não reseta Turnos._',
-        '/init `turno` - _Avança o turno da sessão._',
-
-      ].join('\n');
+      ];
       bot.sendStructedMessage(msg, help_text);
       break;
     default:
-      bot.sendStructedMessage(msg, 'Parametro para /init \`não existe. Use /init \`ajuda');
+      bot.sendStructedMessage(msg, 'Parametro para /cc \`não existe. Use /cc \`ajuda');
       break;
   }
 };

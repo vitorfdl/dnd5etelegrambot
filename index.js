@@ -24,7 +24,7 @@ bot.sendStructedMessage = (msg, text) =>  {
 
 bot.onText(/^(\/r)\b/i, (msg) => {
   const text = msg.text.split(' ');
-  if (text[2] && ['van', 'des'].includes(text[2].toLowerCase())) test[2] = text[2].toLowerCase();
+  if (text[2] && ['van', 'des'].includes(text[2].toLowerCase())) text[2] = text[2].toLowerCase();
   
   if (text[1] === 'ajuda') {
     return bot.sendStructedMessage(msg, [
@@ -42,11 +42,11 @@ bot.onText(/^(\/r)\b/i, (msg) => {
     ]);
   }
 
-  roll(bot, msg, text);
+  roll(bot, msg, text).catch(console.log);
 });
 
 bot.onText(/^(\/rrr)\b/i, (msg) => {
-  const text = msg.text.toLowerCase().split(' ');
+  const text = msg.text.split(' ');
   rrroll(bot, msg, text);
 });
 
@@ -75,7 +75,7 @@ bot.onText(/^(\/ficha)\b/i, (msg) => {
 });
 
 
-bot.onText(/^(\/magia)\b/i, (msg) => {
+bot.onText(/^(\/magi)\b/i, (msg) => {
   spellLookUp(bot, msg);
 });
 
