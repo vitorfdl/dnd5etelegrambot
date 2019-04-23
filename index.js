@@ -15,17 +15,19 @@ const storeCharacter   = require('./services/beyond/storeCharacter');
 const spellLookUp      = require('./services/lookup/spells');
 const featLookUp      = require('./services/lookup/feats');
 
-bot.sendStructedMessage = (msg, text) =>  {
-  bot.sendMessage(msg.chat.id,
+bot.sendStructedMessage = (msg, text, opt = {}) =>  {
+  bot.sendMessage(
+    msg.chat.id,
     Array.isArray(text) ? text.join('\n') : text,
-    { parse_mode: 'MARKDOWN', disable_notification: true });
+    { parse_mode: 'MARKDOWN', disable_notification: true, ...opt },
+  );
 };
 
 
 bot.onText(/^(\/r)\b/i, (msg) => {
   const text = msg.text.split(' ');
   if (text[2] && ['van', 'des'].includes(text[2].toLowerCase())) text[2] = text[2].toLowerCase();
-  
+
   if (text[1] === 'ajuda') {
     return bot.sendStructedMessage(msg, [
       '[Comando] - [Descrição]',

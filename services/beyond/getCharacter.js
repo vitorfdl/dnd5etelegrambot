@@ -29,6 +29,7 @@ async function GetDataSheet(url) {
   let character_sheet = {
     name: data_sheet.name,
     avatar: data_sheet.avatarUrl,
+    url: data_sheet.readonlyUrl,
     stats: {
       strength: 10,
       dexterity: 10,

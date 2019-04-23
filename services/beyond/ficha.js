@@ -47,7 +47,7 @@ module.exports = async (bot, msg) => {
     [`\`Sab: ${data.stats.wisdom} (${data.stats.wisdomMod})\``, `\`Sab: ${data.skills.wisdomSave}\``],
   ].concat(skills);
 
-  const output = table.table(output_table, {
+  let output = table.table(output_table, {
     border: table.getBorderCharacters('void'),
     drawHorizontalLine: () => false,
     columns: {
@@ -61,6 +61,6 @@ module.exports = async (bot, msg) => {
       },
     },
   });
-  // output = output.replace(`Ficha de ${data.name}`, `[Ficha de ${data.name}](${data.avatar})`);
-  bot.sendStructedMessage(msg, output);
+  output = output.replace(`Ficha de ${data.name}`, `[Ficha de ${data.name}](${data.url})`);
+  bot.sendStructedMessage(msg, output, { disable_web_page_preview: true });
 };
