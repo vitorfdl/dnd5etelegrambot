@@ -77,12 +77,12 @@ bot.onText(/^(\/ficha)\b/i, (msg) => {
 });
 
 
-bot.onText(/^(\/magi)\b/i, (msg) => {
+bot.onText(/^(\/magi)/i, (msg) => {
   spellLookUp(bot, msg);
 });
 
 
-bot.onText(/^(\/carac)\b/i, (msg) => {
+bot.onText(/^(\/carac)/i, (msg) => {
   featLookUp(bot, msg);
 });
 
