@@ -21,6 +21,7 @@
     "dotenv": "^7.0.0",
     "google-spreadsheet": "^2.0.7",
     "mkdirp": "^0.5.1",
+    "node-emoji": "^1.10.0",
     "node-telegram-bot-api": "^0.30.0",
     "roll": "^1.2.0",
     "rpg-dice-roller": "^3.0.1",

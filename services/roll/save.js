@@ -17,6 +17,12 @@ module.exports = async (bot, msg, params) => {
   const data = await getCharacter(bot, msg, msg.from.id);
   if (!data) return;
 
+  if (data.mods.advantage.includes(skill)) {
+    type = 'van';
+  } else if (data.mods.disadvantage.includes(skill)) {
+    type = 'des';
+  }
+
   const v = data.skills[skill];
   const translate = data_info.translate_map[skill] || skill;
 

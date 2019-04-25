@@ -7,6 +7,6 @@ module.exports = async (bot, msg, [,, name]) => {
   if (!await initLoader.newDoc(msg.chat.id, name)) {
     return bot.sendStructedMessage(msg, `Nome de sessão \`${name}\` já está em uso.`);
   }
-  
+
   bot.sendStructedMessage(msg, `Sessão de Iniciativa criado: ${name}`);
 };

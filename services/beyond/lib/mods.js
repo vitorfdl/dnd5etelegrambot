@@ -43,14 +43,12 @@ module.exports = (character, data_sheet) => {
         calculated_stats[`${subtype}-damage`] = (set_calculated_stats[`${subtype}-damage`] || 0) + (mod.value || 0);
       } else if (mod.type === 'set') {
         // console.log(mod.id, mod.subType, mod.value);
-        if (subtype in set_calculated_stats && calculated_stats[subtype] > mod.value) continue;
+        if (subtype in set_calculated_stats && calculated_stats[subtype] > (value || 0)) continue;
         calculated_stats[subtype] = (mod.value || 0);
         set_calculated_stats.push(subtype);
       } else if (mod.type === 'ignore') {
         calculated_stats[subtype] = 0;
         ignored.push(subtype);
-      } else if (mod.type === 'advantage' || mod.type === 'disadvantage') {
-        character.mods[mod.type].push(subtype);
       //
       }
 

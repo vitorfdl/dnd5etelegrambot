@@ -27,7 +27,7 @@ async function newDoc(chat_id, name) {
   const [data] = await tago.find({ variable: 'init_session', serie: chat_id, value: name, qty: 1 });
   if (data) return false;
 
-  await save(chat_id, name, { name, creatures: [], turn: 0 });
+  await save(chat_id, name, { name, creatures: [], turn: 0, round: 0 });
   return true;
 }
 

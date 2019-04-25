@@ -1,6 +1,7 @@
-const yargs = require('yargs');
-const initLoader = require('./lib/index');
+const yargs        = require('yargs');
+const initLoader   = require('./lib/index');
 const getCharacter = require('../beyond/getCharacter');
+const changeDice   = require('../lib/changeDice');
 
 const Roll = require('rpg-dice-roller');
 const roller = new Roll.DiceRoller();
@@ -14,6 +15,7 @@ module.exports = async (bot, msg, text = []) => {
   let ca = Number(params.c) || 0;
   let duplicate = Number(params.d) || 1;
   mod = Number(mod);
+  let plus = 0;
 
   if (!creature) {
     const datasheet = await getCharacter(bot, msg, msg.from.id);
@@ -23,6 +25,11 @@ module.exports = async (bot, msg, text = []) => {
     mod = Number(datasheet.skills.initiative);
     hp = datasheet.hp;
     ca = datasheet.armor;
+    if (datasheet.mods.advantage.includes('initiative')) {
+      plus = +1;
+    } else if (datasheet.mods.disadvantage.includes('initiative')) {
+      plus = -1;
+    }
   }
 
   if (!creature) return bot.sendStructedMessage(msg, 'Erro de sintaxe. Use: `/init add <nome> <mod>`');
@@ -38,14 +45,14 @@ module.exports = async (bot, msg, text = []) => {
 
   for (let i = 1; i <= duplicate; i++) {
     const name = i === 1 ? creature : `${creature}${i}`;
-    const order = roller.roll(`1d20${mod >= 0 ? `+${mod}` : mod}`);
+    const order = roller.roll(changeDice(`1d20${mod >= 0 ? `+${mod}` : mod}`, plus));
 
     const e_i = my_list.creatures.findIndex(x => x.name === name);
     if (e_i >= 0) {
-      my_list.creatures[e_i] = { ...my_list.creatures[e_i], name, mod, max_hp: hp, ca };
+      my_list.creatures[e_i] = { ...my_list.creatures[e_i], name, mod, max_hp: hp, ca, plus };
       bot.sendStructedMessage(msg, `Atualizado ${name} na lista ${my_list.name}.`);
     } else {
-      my_list.creatures.push({ name, order: order.total, mod, hp, max_hp: hp, temp_ca: 0, ca });
+      my_list.creatures.push({ name, order: order.total, mod, hp, max_hp: hp, temp_ca: 0, ca, plus });
       bot.sendStructedMessage(msg, `Adicionado ${name} na lista ${my_list.name}.\nPosição: \`${order.output}\``);
     }
   }

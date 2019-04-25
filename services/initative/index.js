@@ -11,6 +11,7 @@ const sethp   = require('./sethp');
 const setca   = require('./setca');
 const setar   = require('./set');
 const turn   = require('./turn');
+const round   = require('./round');
 
 module.exports = (bot, msg) => {
   const text = msg.text.split(' ');
@@ -19,17 +20,20 @@ module.exports = (bot, msg) => {
   }
 
   switch (text[1].toLowerCase()) {
-    case 'add':     add(bot, msg, text); break;
+    case 'add':     add(bot, msg, text).catch(console.log); break;
     case 'list':    list(bot, msg, text); break;
     case 'rem':     rem(bot, msg, text); break;
     case 'reset':   reset(bot, msg, text); break;
-    case 'rolar':   roll(bot, msg, text); break;
+    case 'rolar':   roll(bot, msg, text).catch(console.log); break;
     case 'criar':    newS(bot, msg, text); break;
     case 'deletar': destroy(bot, msg, text); break;
     case 'copiar':    copy(bot, msg, text); break;
     case 'hp':      sethp(bot, msg, text); break;
     case 'ca':      setca(bot, msg, text); break;
     case 'set':      setar(bot, msg, text); break;
+    case 'rodada':
+    case 'round':   round(bot, msg, text); break;
+    case 'turn':
     case 'turno':   turn(bot, msg, text); break;
     case 'ajuda':
       const help_text = [
@@ -56,8 +60,9 @@ module.exports = (bot, msg) => {
         '/init `reset` - _Reinicia pontos de HP._',
         '       `-h` - _Não reseta HP._',
         '       `-c` - _Não reseta CA._',
-        '       `-t` - _Não reseta Turnos._',
+        '       `-t` - _Não reseta Rodadas._',
         '/init `turno` - _Avança o turno da sessão._',
+        '/init `rodada` - _Avança o rodada da sessão._',
 
       ].join('\n');
       bot.sendStructedMessage(msg, help_text);

@@ -1,5 +1,6 @@
 
 const Roll = require('rpg-dice-roller');
+const changeDice = require('../lib/changeDice');
 const roller = new Roll.DiceRoller();
 
 module.exports = (bot, msg, params, datasheet) => {
@@ -9,22 +10,21 @@ module.exports = (bot, msg, params, datasheet) => {
   let opt = '';
 
   if (params[2] === 'van') {
-    dice_string = dice_string.replace(/1d/g, '2d');
-    dice_string += '-L';
-
+    dice_string = changeDice(dice_string, +1);
     opt = '\nRolado com Vantagem';
   } else if (params[2] === 'des') {
-    dice_string = dice_string.replace(/1d/g, '2d');
-    dice_string += '-H';
-
+    dice_string = changeDice(dice_string, -1);
     opt = '\nRolado com Desvantagem';
   }
-  console.log(dice_string);
 
   if (params[opt ? 3 : 2]) {
     extra = ` <b>(${params.slice(opt ? 3 : 2).join(' ')})</b>`;
   }
   const res = roller.roll(dice_string);
+  if (!res.rolls[0]) {
+    return bot.sendMessage(msg.chat.id, 'Dado inválido. Usa a conotação "1d20".');
+  }
+  
   const dice = `${res.notation}`;
   let quote = `<a href="tg://user?id=${msg.from.id}">${msg.from.first_name}</a>${extra}`;
   if (datasheet) {

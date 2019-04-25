@@ -1,4 +1,5 @@
 const initLoader = require('./lib/index');
+const emoji = require('node-emoji');
 
 module.exports = async (bot, msg, [, cmd], my_list) => {
   if (!cmd) {
@@ -7,7 +8,7 @@ module.exports = async (bot, msg, [, cmd], my_list) => {
 
     if (!my_list.creatures[0]) {
       return bot.sendStructedMessage(msg, [
-        `\`${my_list.name} - Turno: ${my_list.turn}\``,
+        `\`${my_list.name} - Rodada: ${my_list.round || 0}\``,
         '=============================',
         '<Vazio>',
         '',
@@ -15,9 +16,16 @@ module.exports = async (bot, msg, [, cmd], my_list) => {
     }
 
     my_list.creatures = my_list.creatures.sort((a, b) => a.order < b.order);
-    const order_list = my_list.creatures.map(x => `${x.order}: *${x.name}* <\`${x.hp}/${x.max_hp}\` HP> (AC \`${x.ca + Number(x.temp_ca || 0)}\`)`);
+    const order_list = my_list.creatures.map((x, i) => {
+      let res = `${x.order}: *${x.name}* <\`${x.hp}/${x.max_hp}\` HP> (AC \`${x.ca + Number(x.temp_ca || 0)}\`)`;
+      if (my_list.turn === i) res = `${emoji.get('crossed_swords')}${res}`;
+      if (x.hp < 0 && x.max_hp) res = `${emoji.get('skull')}${res.slice(res.indexOf(':') + 1)}`;
+      if (x.stop) res = `${emoji.get('alarm_clock')}${res.slice(res.indexOf(':') + 1)}`;
+      return res;
+    });
+
     const header = [
-      `\`${my_list.name} - Turno: ${my_list.turn}\``,
+      `\`${my_list.name} - Rodada: ${my_list.round || 0}\``,
       '=============================',
     ];
 

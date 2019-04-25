@@ -30,6 +30,7 @@ async function GetDataSheet(url) {
     name: data_sheet.name,
     avatar: data_sheet.avatarUrl,
     url: data_sheet.readonlyUrl,
+    mods: { advantage: [], disadvantage: [] },
     stats: {
       strength: 10,
       dexterity: 10,

@@ -118,6 +118,7 @@ async function getCharacter(url) {
     armor: Number(character.cell('R12').value),
     skills: getSkills(character),
     stats: getStats(character),
+    mods: { advantage: [], disadvantage: [] },
   };
 
   return character_sheet;

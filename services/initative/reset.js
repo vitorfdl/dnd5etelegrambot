@@ -19,7 +19,8 @@ module.exports = async (bot, msg, text) => {
     return { ...x, temp_ca: 0, hp: x.max_hp };
   });
 
-  if (!params.t) my_list.turn = 0;
+  if (!params.t) my_list.round = 0;
+  my_list.turn = 0;
 
   bot.sendMessage(msg.chat.id, `Sessão resetada: [${my_list.name}]`);
 
