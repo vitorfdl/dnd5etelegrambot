@@ -16,6 +16,8 @@ module.exports = async (bot, msg, text = []) => {
   let duplicate = Number(params.d) || 1;
   mod = Number(mod);
   let plus = 0;
+  if (params.v) plus = +1;
+  if (params.d) plus = -1;
 
   if (!creature) {
     const datasheet = await getCharacter(bot, msg, msg.from.id);

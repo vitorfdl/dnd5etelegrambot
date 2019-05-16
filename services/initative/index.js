@@ -51,6 +51,8 @@ module.exports = (bot, msg) => {
         '       `-h <hp>` - _Seta HP da criatura_',
         '       `-c <ca>` - _Seta CA da criatura_',
         '       `-d <N>` - _Duplica a criatura N vezes_',
+        '       `-v` - _Vantagem em rolagem_',
+        '       `-d` - _Desvantagem em rolagem_',
         '/init `rem <nomes...>` - _Remove criatura da sessão._',
         '/init `hp <nome> <+/-hp>` - _Aumenta ou reduz HP do alvo._',
         '/init `ca <nome> <CA>` - _Altera CA do alvo._',
