@@ -29,11 +29,11 @@ module.exports = async (bot, msg, text) => {
       plus = -1;
     }
     const roll = roller.roll(changeDice(`1d20${x.mod >= 0 ? `+${x.mod}` : x.mod}`, plus));
-    return { ...x, order: roll.total, roll: roll.output };
-  });
+    return { ...x, order: Number(roll.total), roll: roll.output };
+  }).sort((a, b) => a.order < b.order);
+
   initLoader.save(msg.chat.id, my_list.name, my_list);
 
-  my_list.creatures = my_list.creatures.sort((a, b) => a.order < b.order);
   const to_channel = my_list.creatures.map(x => `${x.roll}: *${x.name}* <${x.hp}/${x.max_hp} HP> (AC ${x.ca})`);
   return bot.sendStructedMessage(msg, [
     `\`${my_list.name} - Rodada: ${my_list.round || 0}\``,
