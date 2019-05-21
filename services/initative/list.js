@@ -15,8 +15,7 @@ module.exports = async (bot, msg, [, cmd], my_list) => {
         'Use `/init ajuda` para ajuda sobre sessões.']);
     }
 
-    my_list.creatures = my_list.creatures.sort((a, b) => a.order < b.order);
-    const order_list = my_list.creatures.map((x, i) => {
+    const order_list = my_list.creatures.sort((a, b) => Number(a.order) < Number(b.order)).map((x, i) => {
       let res = `${x.order}: *${x.name}* <\`${x.hp}/${x.max_hp}\` HP> (AC \`${x.ca + Number(x.temp_ca || 0)}\`)`;
       if (my_list.turn === i) res = `${emoji.get('crossed_swords')}${res}`;
       if (x.hp < 0 && x.max_hp) res = `${emoji.get('skull')}${res.slice(res.indexOf(':') + 1)}`;
