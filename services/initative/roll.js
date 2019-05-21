@@ -30,7 +30,7 @@ module.exports = async (bot, msg, text) => {
     }
     const roll = roller.roll(changeDice(`1d20${x.mod >= 0 ? `+${x.mod}` : x.mod}`, plus));
     return { ...x, order: Number(roll.total), roll: roll.output };
-  }).sort((a, b) => a.order < b.order);
+  }).sort((a, b) => a.order - b.order);
 
   initLoader.save(msg.chat.id, my_list.name, my_list);
 
