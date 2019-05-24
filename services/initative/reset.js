@@ -13,10 +13,10 @@ module.exports = async (bot, msg, text) => {
 
   my_list.creatures = my_list.creatures.map((x) => {
     const changes = {};
-    if (!params.h) changes.hp = x.mas_hp;
+    if (!params.h) changes.hp = x.max_hp;
     if (!params.c) changes.temp_ca = 0;
 
-    return { ...x, temp_ca: 0, hp: x.max_hp };
+    return { ...x, ...changes };
   });
 
   if (!params.t) my_list.round = 0;
