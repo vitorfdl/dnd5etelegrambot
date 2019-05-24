@@ -1,4 +1,5 @@
 const initLoader = require('./lib/index');
+const yargs = require('yargs');
 
 module.exports = async (bot, msg, text) => {
   // /init add name creature mod hp
@@ -16,8 +17,9 @@ module.exports = async (bot, msg, text) => {
 
   const params = yargs.parse(text.join(' '));
 
-  if (params.f) monster.hp = hp;
-  else {
+  if (params.f) {
+    monster.hp = hp;
+  } else {
     monster.hp += hp;
     if (monster.hp <= 0) monster.hp = 0;
   }
