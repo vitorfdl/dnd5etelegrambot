@@ -1,5 +1,6 @@
 const yargs = require('yargs');
 const initLoader = require('./lib/index');
+const initList = require('./list');
 
 module.exports = async (bot, msg, text) => {
   const my_list = await initLoader.getSession(msg.chat.id);
@@ -23,7 +24,7 @@ module.exports = async (bot, msg, text) => {
   my_list.turn = 0;
 
   bot.sendMessage(msg.chat.id, `Sessão resetada: [${my_list.name}]`);
-
-  initLoader.save(msg.chat.id, text[2], my_list);
+  initLoader.save(msg.chat.id, my_list.name, my_list);
+  return initList(bot, msg, [], my_list);
 };
 
