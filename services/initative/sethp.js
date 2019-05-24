@@ -1,7 +1,9 @@
 const initLoader = require('./lib/index');
 
-module.exports = async (bot, msg, [,,nome,hp]) => {
+module.exports = async (bot, msg, text) => {
   // /init add name creature mod hp
+  let nome = text[2];
+  let hp = text[3];
   if (!hp || !nome) return bot.sendMessage(msg.chat.id, 'Erro de sintaxe. Use: /init setca <nome> <+/-HP>');
   else if (Number.isNaN(hp)) return bot.sendMessage(msg.chat.id, 'O CA a ser modificado precisa ser um número!');
   hp = Number(hp);
@@ -12,7 +14,13 @@ module.exports = async (bot, msg, [,,nome,hp]) => {
   const monster = my_list.creatures.find(x => x.name.toLowerCase() === nome.toLowerCase());
   if (!monster) return bot.sendMessage(msg.chat.id, `Criatura ${nome} não encontrado na sessão ${my_list.name}.`);
 
-  monster.hp += hp;
+  const params = yargs.parse(text.join(' '));
+
+  if (params.f) monster.hp = hp;
+  else {
+    monster.hp += hp;
+    if (monster.hp <= 0) monster.hp = 0;
+  }
 
   initLoader.save(msg.chat.id, my_list.name, my_list);
   bot.sendMessage(msg.chat.id, `HP de ${nome} agora é **${monster.hp}** (${hp >= 0 ? `+${hp}` : hp}).`);
