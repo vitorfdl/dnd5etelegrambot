@@ -24,15 +24,18 @@ module.exports = async (bot, msg, text) => {
     if (monster.hp <= 0) monster.hp = 0;
   }
 
+  let extra = '';
   if (params.m) {
     monster.death = monster.death ? false : true;
+    extra += `\n${nome} foi setado como morto: ${monster.death ? 'verdadeiro' : 'falso'}.`;
   }
 
   if (params.i) {
     monster.constrained = monster.constrained ? false : true;
+    extra += `\n${nome} foi setado como incapacitado: ${monster.constrained ? 'verdadeiro' : 'falso'}.`;
   }
 
   initLoader.save(msg.chat.id, my_list.name, my_list);
-  bot.sendMessage(msg.chat.id, `HP de ${nome} agora é **${monster.hp}** (${hp >= 0 ? `+${hp}` : hp}).`);
+  bot.sendMessage(msg.chat.id, `HP de ${nome} agora é **${monster.hp}** (${hp >= 0 ? `+${hp}` : hp}).${extra}`);
 };
 
