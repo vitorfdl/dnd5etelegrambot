@@ -1,13 +1,6 @@
 const initLoader = require('./lib/index');
 const emoji = require('node-emoji');
 
-function reOrder(item) {
-  return item.sort((a, b) => {
-      if (a.order === b.order) return 0;
-      return a.order < b.order ? 1 : -1;
-    });
-}
-
 module.exports = async (bot, msg, [, cmd], my_list) => {
   if (!cmd) {
     if (!my_list) my_list = await initLoader.getSession(msg.chat.id);
@@ -22,7 +15,7 @@ module.exports = async (bot, msg, [, cmd], my_list) => {
         'Use `/init ajuda` para ajuda sobre sessões.']);
     }
 
-    const order_list = reOrder(my_list.creatures).map((x, i) => {
+    const order_list = initLoader.reOrder(my_list.creatures).map((x, i) => {
       let res = `${x.order}: *${x.name}* <\`${x.hp}/${x.max_hp}\` HP> (AC \`${x.ca + Number(x.temp_ca || 0)}\`)`;
       if (my_list.turn === i) res = `${emoji.get('crossed_swords')}${res}`;
       if ((x.hp < 0 && x.max_hp) || x.death) res = `${emoji.get('skull')}${res.slice(res.indexOf(':') + 1)}`;

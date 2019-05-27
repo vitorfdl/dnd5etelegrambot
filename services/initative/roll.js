@@ -32,6 +32,7 @@ module.exports = async (bot, msg, text) => {
     return { ...x, order: Number(roll.total), roll: roll.output };
   }).sort((a, b) => a.order - b.order);
 
+  my_list.creatures = initLoader.reOrder(my_list.creatures);
   initLoader.save(msg.chat.id, my_list.name, my_list);
 
   const to_channel = my_list.creatures.map(x => `${x.roll}: *${x.name}* <${x.hp}/${x.max_hp} HP> (AC ${x.ca})`);

@@ -49,5 +49,12 @@ async function changeSession(chat_id, name) {
   return true;
 }
 
+function reOrder(item) {
+  return item.sort((a, b) => {
+      if (a.order === b.order) return 0;
+      return a.order < b.order ? 1 : -1;
+    });
+}
 
-module.exports = { newDoc, save, load, namelist, remove, getSession, changeSession };
+
+module.exports = { newDoc, save, load, namelist, remove, getSession, changeSession, reOrder };
