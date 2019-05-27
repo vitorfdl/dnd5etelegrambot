@@ -13,7 +13,7 @@ module.exports = async (bot, msg, text = []) => {
 
   let hp = Number(params.h) || 0;
   let ca = Number(params.c) || 0;
-  let duplicate = Number(params.d) || 1;
+  let duplicate = Number(params.n) || 1;
   mod = Number(mod);
   let plus = 0;
   if (params.v) plus = +1;

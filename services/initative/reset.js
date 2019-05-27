@@ -16,7 +16,9 @@ module.exports = async (bot, msg, text) => {
     const changes = {};
     if (!params.h) changes.hp = x.max_hp;
     if (!params.c) changes.temp_ca = 0;
-
+    changes.death = false;
+    changes.constrained = false;
+    
     return { ...x, ...changes };
   });
 

@@ -24,6 +24,14 @@ module.exports = async (bot, msg, text) => {
     if (monster.hp <= 0) monster.hp = 0;
   }
 
+  if (params.m) {
+    monster.death = monster.death ? false : true;
+  }
+
+  if (params.i) {
+    monster.constrained = monster.constrained ? false : true;
+  }
+
   initLoader.save(msg.chat.id, my_list.name, my_list);
   bot.sendMessage(msg.chat.id, `HP de ${nome} agora é **${monster.hp}** (${hp >= 0 ? `+${hp}` : hp}).`);
 };
