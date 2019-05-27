@@ -36,6 +36,6 @@ module.exports = async (bot, msg, text) => {
   }
 
   initLoader.save(msg.chat.id, my_list.name, my_list);
-  bot.sendMessage(msg.chat.id, `HP de ${nome} agora é **${monster.hp}** (${hp >= 0 ? `+${hp}` : hp}).${extra}`);
+  bot.sendStructedMessage(msg, `HP de ${nome} agora é **${monster.hp}** (${hp >= 0 ? `+${hp}` : hp}).${extra}`);
 };
 
