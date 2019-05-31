@@ -62,6 +62,11 @@ module.exports = async (bot, msg, text = []) => {
       my_list.creatures.push({ name, order: order.total, mod, hp, max_hp: hp, temp_ca: 0, ca, plus });
       bot.sendStructedMessage(msg, `Adicionado ${name} na lista ${my_list.name}.\nPosição: \`${order.output}\``);
     }
+
+    if (String(params.h).includes('d')) {
+      const roll = roller.roll(params.h);
+      hp = roll.total;
+    }
   }
 
   initLoader.save(msg.chat.id, my_list.name, my_list);
