@@ -15,6 +15,7 @@ module.exports = async (bot, msg, text) => {
     return bot.sendStructedMessage(msg, `Nenhuma criaturas citada foi encontrada na sessão ${my_list.name}.`);
   }
 
+  my_list.creatures = initLoader.reOrder(my_list.creatures);
   initLoader.save(msg.chat.id, my_list.name, my_list).catch(console.log);
   bot.sendStructedMessage(msg, `*${total_old - my_list.creatures.length}* criaturas removidas da sessão *${my_list.name}*!`);
 };

@@ -12,7 +12,7 @@ module.exports = async (bot, msg, text = []) => {
   const params = yargs.parse(text);
 
   let hp = Number(params.h) || 0;
-  if (String(params.h).includes('d')) {
+  if (params.h && String(params.h).includes('d')) {
     const roll = roller.roll(params.h);
     hp = roll.total;
   }
@@ -63,11 +63,12 @@ module.exports = async (bot, msg, text = []) => {
       bot.sendStructedMessage(msg, `Adicionado ${name} na lista ${my_list.name}.\nPosição: \`${order.output}\``);
     }
 
-    if (String(params.h).includes('d')) {
+    if (params.h && String(params.h).includes('d')) {
       const roll = roller.roll(params.h);
       hp = roll.total;
     }
   }
 
+  my_list.creatures = initLoader.reOrder(my_list.creatures);
   initLoader.save(msg.chat.id, my_list.name, my_list);
 };

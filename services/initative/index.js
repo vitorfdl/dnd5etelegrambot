@@ -32,7 +32,7 @@ module.exports = (bot, msg) => {
     case 'ca':      setca(bot, msg, text); break;
     case 'set':      setar(bot, msg, text); break;
     case 'rodada':
-    case 'round':   round(bot, msg, text); break;
+    case 'round':   round(bot, msg); break;
     case 'turn':
     case 'turno':   turn(bot, msg, text); break;
     case 'ajuda':
