@@ -18,7 +18,7 @@ module.exports = async (bot, msg, [, cmd], my_list) => {
     const order_list = initLoader.reOrder(my_list.creatures).map((x, i) => {
       let res = `${x.order}: *${x.name}* <\`${x.hp}/${x.max_hp}\` HP> (AC \`${x.ca + Number(x.temp_ca || 0)}\`)`;
       if (my_list.turn === i) res = `${emoji.get('crossed_swords')}${res}`;
-      if ((x.hp < 0 && x.max_hp) || x.death) res = `${emoji.get('skull')}${res.slice(res.indexOf(':') + 1)}`;
+      if ((x.hp <= 0 && x.max_hp) || x.death) res = `${emoji.get('skull')}${res.slice(res.indexOf(':') + 1)}`;
       if (x.constrained) res = `${emoji.get('clock1')}${res.slice(res.indexOf(':') + 1)}`;
       return res;
     });

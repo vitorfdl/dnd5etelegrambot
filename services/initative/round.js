@@ -1,9 +1,13 @@
 const initLoader = require('./lib/index');
 const initList = require('./list');
 
-module.exports = async (bot, msg) => {
-  const my_list = await initLoader.load(msg.chat.id);
-  if (!my_list) return bot.sendStructedMessage(msg, 'Você deve setar uma sessão como ativa. Use `/init setar <sessao>`.');
+module.exports = async (bot, msg, my_list = null) => {
+  if (!my_list) {
+    my_list = await initLoader.load(msg.chat.id);
+    if (!my_list) {
+      return bot.sendStructedMessage(msg, 'Você deve setar uma sessão como ativa. Use `/init setar <sessao>`.');
+    }
+  }
 
   my_list.round = (my_list.round || 0) + 1;
   my_list.turn = 0;
