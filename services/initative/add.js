@@ -12,6 +12,11 @@ module.exports = async (bot, msg, text = []) => {
   const params = yargs.parse(text);
 
   let hp = Number(params.h) || 0;
+  if (String(params.h).includes('d')) {
+    const roll = roller.roll(params.h);
+    hp = roll.total;
+  }
+  
   let ca = Number(params.c) || 0;
   let duplicate = Number(params.n) || 1;
   mod = Number(mod);
