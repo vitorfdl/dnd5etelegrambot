@@ -10,8 +10,9 @@ module.exports = async (bot, msg, text) => {
   
   if (name) {
     const pos = my_list.creatures.findIndex( x => x.name.toLowerCase() === name);
-    if (!pos) return bot.sendStructedMessage(msg, `Monstro ${name} não encontrado nesta sessão.`);
-    initList.turn = pos;
+    if (pos < 0) return bot.sendStructedMessage(msg, `Monstro ${name} não encontrado nesta sessão.`);
+
+    my_list.turn = pos;
     await initLoader.save(msg.chat.id, my_list.name, my_list);
     return initList(bot, msg, [], my_list);
   }
