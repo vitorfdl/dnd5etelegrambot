@@ -3,16 +3,15 @@ const initList = require('./list');
 const initRound = require('./round');
 
 module.exports = async (bot, msg, text) => {
-  const n = Number(text[2]);
+  const name = text[2] ? text[2].toLowerCase() : null;
 
   const my_list = await initLoader.load(msg.chat.id);
   if (!my_list) return bot.sendStructedMessage(msg, 'Você deve setar uma sessão como ativa. Use `/init setar <sessao>`.');
-
-  if (n && my_list.creatures.length <= n) {
-    my_list.turn = n - 1;
-    const m = my_list.creatures[my_list.turn];
-    bot.sendStructedMessage(msg, `Turno setado para ${n}.\`${m.name}\``);
-
+  
+  if (name) {
+    const pos = my_list.creatures.findIndex( x => x.name.toLowerCase() === name);
+    if (!pos) return bot.sendStructedMessage(msg, `Monstro ${name} não encontrado nesta sessão.`);
+    initList.turn = pos;
     await initLoader.save(msg.chat.id, my_list.name, my_list);
     return initList(bot, msg, [], my_list);
   }

@@ -50,10 +50,10 @@ async function changeSession(chat_id, name) {
 }
 
 function reOrder(item) {
-  return item.sort((a, b) => {
-      if (a.order === b.order) return 0;
-      return a.order < b.order ? 1 : -1;
-    });
+  return item.filter(x => x).sort((a, b) => {
+    if (a.order === b.order) return 0;
+    return a.order < b.order ? 1 : -1;
+  });
 }
 
 
