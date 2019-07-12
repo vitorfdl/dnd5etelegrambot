@@ -4,7 +4,6 @@ const TelegramBot = require('node-telegram-bot-api');
 const bot = new TelegramBot(process.env.TALEGRAM, { polling: true });
 const TagoDevice = require('tago/device');
 const tago = new TagoDevice(process.env.TAGO);
-
 const initiative = require('./services/initative/index');
 const roll       = require('./services/roll/roll');
 const rrroll     = require('./services/roll/rrroll');
@@ -15,8 +14,9 @@ const storeCharacter   = require('./services/beyond/storeCharacter');
 const spellLookUp      = require('./services/lookup/spells');
 const featLookUp      = require('./services/lookup/feats');
 
+
 bot.sendStructedMessage = (msg, text, opt = {}) =>  {
-  bot.sendMessage(
+bot.sendMessage(
     msg.chat.id,
     Array.isArray(text) ? text.join('\n') : text,
     { parse_mode: 'MARKDOWN', disable_notification: true, ...opt },
@@ -65,7 +65,6 @@ bot.onText(/^(\/save)\b/i, async (msg) => {
 bot.onText(/^(\/init)\b/i, (msg) => {
   initiative(bot, msg);
 });
-
 
 bot.onText(/^(\/personagem)\b/i, (msg) => {
   const text = msg.text.split(' ');
