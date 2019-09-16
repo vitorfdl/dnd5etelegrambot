@@ -11,7 +11,7 @@ const schools = {
   T: 'Transmutation',
   C: 'Conjuration',
 };
-module.exports = (bot, msg) => {
+module.exports = async (bot, msg) => {
   const spell_name = msg.text.split(' ').slice(1).join(' ').toLowerCase();
   const similar = [];
   const spell = spell_list.find((x) => {

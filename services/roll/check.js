@@ -5,6 +5,7 @@ const getCharacter = require('../beyond/getCharacter');
 const changeDice = require('../lib/changeDice');
 
 module.exports = async (bot, msg, params) => {
+  if (!params[1]) return;
   let skill = params[1].toLowerCase();
   let type = params[2] ? params[2].toLowerCase() : params[2];
 

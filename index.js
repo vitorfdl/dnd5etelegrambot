@@ -15,8 +15,8 @@ const storeCharacter   = require('./services/beyond/storeCharacter');
 const spellLookUp      = require('./services/lookup/spells');
 const featLookUp      = require('./services/lookup/feats');
 
-bot.sendStructedMessage = (msg, text, opt = {}) =>  {
-  bot.sendMessage(
+bot.sendStructedMessage = async (msg, text, opt = {}) =>  {
+  await bot.sendMessage(
     msg.chat.id,
     Array.isArray(text) ? text.join('\n') : text,
     { parse_mode: 'MARKDOWN', disable_notification: true, ...opt },
@@ -24,7 +24,7 @@ bot.sendStructedMessage = (msg, text, opt = {}) =>  {
 };
 
 
-bot.onText(/^(\/r)\b/i, (msg) => {
+bot.onText(/^(\/r)\b/i, async (msg) => {
   const text = msg.text.split(' ');
   if (text[2] && ['van', 'des'].includes(text[2].toLowerCase())) text[2] = text[2].toLowerCase();
 
@@ -44,46 +44,46 @@ bot.onText(/^(\/r)\b/i, (msg) => {
     ]);
   }
 
-  roll(bot, msg, text).catch(console.log);
+  await roll(bot, msg, text).catch(console.log);
 });
 
-bot.onText(/^(\/rrr)\b/i, (msg) => {
+bot.onText(/^(\/rrr)\b/i, async (msg) => {
   const text = msg.text.split(' ');
-  rrroll(bot, msg, text);
+  await rrroll(bot, msg, text);
 });
 
 bot.onText(/^(\/check)\b/i, async (msg) => {
   const text = msg.text.toLowerCase().split(' ');
-  check(bot, msg, text);
+  await check(bot, msg, text);
 });
 
 bot.onText(/^(\/save)\b/i, async (msg) => {
   const text = msg.text.toLowerCase().split(' ');
-  save(bot, msg, text);
+  await save(bot, msg, text);
 });
 
-bot.onText(/^(\/init)\b/i, (msg) => {
-  initiative(bot, msg);
+bot.onText(/^(\/init)\b/i, async (msg) => {
+  await initiative(bot, msg);
 });
 
 
-bot.onText(/^(\/personagem)\b/i, (msg) => {
+bot.onText(/^(\/personagem)\b/i, async (msg) => {
   const text = msg.text.split(' ');
-  storeCharacter(bot, msg, text[1]);
+  await storeCharacter(bot, msg, text[1]);
 });
 
-bot.onText(/^(\/ficha)\b/i, (msg) => {
-  ficha(bot, msg);
-});
-
-
-bot.onText(/^(\/magi)/i, (msg) => {
-  spellLookUp(bot, msg);
+bot.onText(/^(\/ficha)\b/i, async (msg) => {
+  await ficha(bot, msg);
 });
 
 
-bot.onText(/^(\/carac)/i, (msg) => {
-  featLookUp(bot, msg);
+bot.onText(/^(\/magi)/i, async (msg) => {
+  await spellLookUp(bot, msg);
+});
+
+
+bot.onText(/^(\/carac)/i, async (msg) => {
+  await featLookUp(bot, msg);
 });
 
 bot.onText(/^(\/ajuda)\b/i, async (msg) => {

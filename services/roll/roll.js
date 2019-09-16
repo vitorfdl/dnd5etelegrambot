@@ -3,7 +3,7 @@ const Roll = require('rpg-dice-roller');
 const changeDice = require('../lib/changeDice');
 const roller = new Roll.DiceRoller();
 
-module.exports = (bot, msg, params, datasheet) => {
+module.exports = async (bot, msg, params, datasheet) => {
   let dice_string = params[1];
 
   let extra = '';
@@ -24,7 +24,7 @@ module.exports = (bot, msg, params, datasheet) => {
   if (!res.rolls[0]) {
     return bot.sendMessage(msg.chat.id, 'Dado inválido. Usa a conotação "1d20".');
   }
-  
+
   const dice = `${res.notation}`;
   let quote = `<a href="tg://user?id=${msg.from.id}">${msg.from.first_name}</a>${extra}`;
   if (datasheet) {
