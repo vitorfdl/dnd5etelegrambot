@@ -80,7 +80,6 @@ function docInfo(doc) {
   });
 }
 
-
 async function getCharacter(url) {
   const [, sheet_id] = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
   const doc = new GoogleSpreadsheet(sheet_id);
@@ -124,4 +123,13 @@ async function getCharacter(url) {
   return character_sheet;
 }
 
-module.exports = getCharacter;
+
+async function handler(url) {
+  try {
+    return getCharacter(url);
+  } catch(e) {
+    console.log(e);
+    return null;
+  }
+}
+module.exports = handler;

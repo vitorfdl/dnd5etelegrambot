@@ -4,7 +4,6 @@ const TelegramBot = require('node-telegram-bot-api');
 const bot = new TelegramBot(process.env.TALEGRAM, { polling: true });
 const TagoDevice = require('tago/device');
 const tago = new TagoDevice(process.env.TAGO);
-
 const initiative = require('./services/initative/index');
 const roll       = require('./services/roll/roll');
 const rrroll     = require('./services/roll/rrroll');
