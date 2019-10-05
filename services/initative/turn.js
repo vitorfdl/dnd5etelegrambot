@@ -19,7 +19,7 @@ module.exports = async (bot, msg, text) => {
 
   my_list.turn = (my_list.turn || 0) + 1;
   for (let i = 0; i <= my_list.creatures.length; i += 1) {
-    if (i >= my_list.creatures.length) {
+    if (my_list.turn + i >= my_list.creatures.length) {
       return initRound(bot, msg, my_list);
     }
 
