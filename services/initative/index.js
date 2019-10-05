@@ -20,16 +20,22 @@ module.exports = (bot, msg) => {
   }
 
   switch (text[1].toLowerCase()) {
+    case 'adicionar':
     case 'add':     add(bot, msg, text).catch(console.log); break;
+    case 'listar':
     case 'list':    list(bot, msg, text); break;
+    case 'remover':
     case 'rem':     rem(bot, msg, text); break;
     case 'reset':   reset(bot, msg, text); break;
+    case 'roll':
     case 'rolar':   roll(bot, msg, text).catch(console.log); break;
     case 'criar':    newS(bot, msg, text); break;
+    case 'del':
     case 'deletar': destroy(bot, msg, text); break;
     case 'copiar':    copy(bot, msg, text); break;
     case 'hp':      sethp(bot, msg, text); break;
     case 'ca':      setca(bot, msg, text); break;
+    case 'setar':
     case 'set':      setar(bot, msg, text); break;
     case 'rodada':
     case 'round':   round(bot, msg); break;
