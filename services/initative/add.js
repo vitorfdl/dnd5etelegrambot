@@ -23,6 +23,7 @@ module.exports = async (bot, msg, text = []) => {
   let plus = 0;
   if (params.v) plus = +1;
   if (params.d) plus = -1;
+  const is_m = params.m;
 
   if (!creature) {
     const datasheet = await getCharacter(bot, msg, msg.from.id);
@@ -56,10 +57,10 @@ module.exports = async (bot, msg, text = []) => {
 
     const e_i = my_list.creatures.findIndex(x => x.name === name);
     if (e_i >= 0) {
-      my_list.creatures[e_i] = { ...my_list.creatures[e_i], name, mod, max_hp: hp, ca, plus };
+      my_list.creatures[e_i] = { ...my_list.creatures[e_i], name, mod, max_hp: hp, ca, plus, is_monster: is_m };
       bot.sendStructedMessage(msg, `Atualizado ${name} na lista ${my_list.name}.`);
     } else {
-      my_list.creatures.push({ name, order: order.total, mod, hp, max_hp: hp, temp_ca: 0, ca, plus });
+      my_list.creatures.push({ name, order: order.total, mod, hp, max_hp: hp, temp_ca: 0, ca, plus, is_monster: is_m });
       bot.sendStructedMessage(msg, `Adicionado ${name} na lista ${my_list.name}.\nPosição: \`${order.output}\``);
     }
 

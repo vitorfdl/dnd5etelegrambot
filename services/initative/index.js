@@ -29,7 +29,7 @@ module.exports = (bot, msg) => {
     case 'reset':   reset(bot, msg, text); break;
     case 'roll':
     case 'rolar':   roll(bot, msg, text).catch(console.log); break;
-    case 'criar':    newS(bot, msg, text); break;
+    case 'criar':    newS(bot, msgw, text); break;
     case 'del':
     case 'deletar': destroy(bot, msg, text); break;
     case 'copiar':    copy(bot, msg, text); break;
@@ -59,6 +59,7 @@ module.exports = (bot, msg) => {
         '       `-n <N>` - _Duplica a criatura N vezes_',
         '       `-v` - _Vantagem em rolagem_',
         '       `-d` - _Desvantagem em rolagem_',
+        '       `-m` - _Criatura é um monstro (cor diferente)_',
         '/init `rem <nomes...>` - _Remove criatura da sessão._',
         '/init `hp <nome> <+/-hp>` - _Aumenta ou reduz HP do alvo._',
         '      `-f` - _Força o hp, sem soma/subtração._',
